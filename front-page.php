@@ -423,6 +423,13 @@
           <div><div class="link-label">LinkedIn</div><div>Professional profile</div></div>
         </a>
         <?php endif; ?>
+
+        <?php $orcid = dlm_opt('contact_orcid'); if ( $orcid ) : ?>
+        <a class="contact-link" href="<?php echo esc_url($orcid); ?>" target="_blank" rel="noopener noreferrer">
+          <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 7v10M12 7h2a3 3 0 0 1 0 6h-2v4M12 7v10"/></svg></span>
+          <div><div class="link-label">ORCID</div><div>Researcher ID</div></div>
+        </a>
+        <?php endif; ?>
       </div>
     </div>
 

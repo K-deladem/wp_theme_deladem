@@ -419,7 +419,7 @@ function deladem_options_page() {
             'hero_stat3_num', 'hero_stat3_label', 'hero_stat4_num', 'hero_stat4_label',
             'about_titre', 'about_sous_titre',
             'info_institution', 'info_labo', 'info_directeur', 'info_localisation', 'info_langues',
-            'contact_email', 'contact_github', 'contact_linkedin', 'contact_institution_url',
+            'contact_email', 'contact_github', 'contact_linkedin', 'contact_orcid', 'contact_institution_url',
             'partners_titre', 'partners_label',
             'footer_texte', 'footer_mention',
         ];
@@ -491,6 +491,7 @@ function deladem_options_page() {
         'contact_email'     => '',
         'contact_github'    => '',
         'contact_linkedin'  => '',
+        'contact_orcid'     => '',
         'contact_institution_url' => 'https://uqac.ca',
         'partners_label'    => 'Collaborations',
         'partners_titre'    => 'Partner Companies & Institutions',
@@ -707,6 +708,7 @@ function deladem_options_page() {
                     <tr><th>Email de contact</th><td><input type="email" name="contact_email" value="<?php echo g('contact_email',$d); ?>" class="regular-text" placeholder="votre@email.com"></td></tr>
                     <tr><th>URL GitHub</th><td><input type="url" name="contact_github" value="<?php echo g('contact_github',$d); ?>" class="regular-text" placeholder="https://github.com/..."></td></tr>
                     <tr><th>URL LinkedIn</th><td><input type="url" name="contact_linkedin" value="<?php echo g('contact_linkedin',$d); ?>" class="regular-text" placeholder="https://linkedin.com/in/..."></td></tr>
+                    <tr><th>URL ORCID</th><td><input type="url" name="contact_orcid" value="<?php echo g('contact_orcid',$d); ?>" class="regular-text" placeholder="https://orcid.org/0000-0000-0000-0000"></td></tr>
                     <tr><th>URL Institution</th><td><input type="url" name="contact_institution_url" value="<?php echo g('contact_institution_url',$d); ?>" class="regular-text" placeholder="https://uqac.ca"></td></tr>
                 </table>
             </div>
@@ -856,9 +858,10 @@ function deladem_customizer_register( $wp_customize ) {
         'panel' => 'deladem_panel',
     ] );
     $contact_fields = [
-        'contact_email'   => 'Email',
-        'contact_github'  => 'GitHub URL',
+        'contact_email'    => 'Email',
+        'contact_github'   => 'GitHub URL',
         'contact_linkedin' => 'LinkedIn URL',
+        'contact_orcid'    => 'ORCID URL',
     ];
     foreach ( $contact_fields as $key => $label ) {
         $wp_customize->add_setting( 'dlm_' . $key, [ 'type' => 'option', 'sanitize_callback' => 'sanitize_text_field' ] );

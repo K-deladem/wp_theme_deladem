@@ -530,7 +530,7 @@ a { color: inherit; transition: color 0.2s; }
 
 /* ── CONTACT ── */
 .contact-section { background: var(--ink); padding: 6rem 3rem; }
-.contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; overflow-wrap: break-word; word-break: break-word; }
+.contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; overflow-wrap: break-word; word-break: break-word; }
 
 .contact-section .section-label { color: var(--accent); }
 .contact-section .section-label::before { background: var(--accent); }

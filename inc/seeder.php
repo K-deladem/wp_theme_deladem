@@ -82,6 +82,7 @@ function deladem_seed_options() {
         'contact_email'           => 'researcher@example.uqac.ca',
         'contact_github'          => 'https://github.com/deladem-ihm',
         'contact_linkedin'        => 'https://linkedin.com/in/deladem-ihm',
+        'contact_orcid'           => 'https://orcid.org/0000-0001-2345-6789',
         'contact_institution_url' => 'https://uqac.ca',
 
         // Partners
