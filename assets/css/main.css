@@ -218,20 +218,22 @@ a { color: inherit; transition: color 0.2s; }
   transform: scale(1.12);
 }
 
-/* Badge positions — distributed in a balanced grid pattern */
-.sensor-badge:nth-child(1)  { top: 12%; left: 8%;  animation-delay: 0s; }
-.sensor-badge:nth-child(2)  { top: 8%;  right: 12%; animation-delay: 1.2s; }
-.sensor-badge:nth-child(3)  { top: 32%; left: 16%; animation-delay: 2.4s; }
-.sensor-badge:nth-child(4)  { top: 28%; right: 6%; animation-delay: 0.7s; }
-.sensor-badge:nth-child(5)  { top: 50%; left: 6%;  animation-delay: 1.8s; }
-.sensor-badge:nth-child(6)  { top: 48%; right: 18%; animation-delay: 0.4s; }
-.sensor-badge:nth-child(7)  { top: 66%; left: 20%; animation-delay: 3s; }
-.sensor-badge:nth-child(8)  { top: 64%; right: 8%; animation-delay: 2s; }
-/* Dynamic fallback for 9+ badges */
-.sensor-badge:nth-child(n+9){
-  top: calc(12% + var(--badge-idx, 0) * 10%);
-  left: calc(8% + var(--badge-idx, 0) * 5%);
-  animation-delay: calc(var(--badge-idx, 0) * 0.6s);
+/* Badge positions — staggered diagonal layout, clear of bottom stats */
+.sensor-badge:nth-child(1)  { top: 8%;  left: 6%;   animation-delay: 0s; }
+.sensor-badge:nth-child(2)  { top: 6%;  left: 52%;  animation-delay: 1.5s; }
+.sensor-badge:nth-child(3)  { top: 22%; left: 30%;  animation-delay: 0.6s; }
+.sensor-badge:nth-child(4)  { top: 20%; right: 5%;  animation-delay: 2.2s; }
+.sensor-badge:nth-child(5)  { top: 38%; left: 5%;   animation-delay: 1s; }
+.sensor-badge:nth-child(6)  { top: 36%; left: 55%;  animation-delay: 2.8s; }
+.sensor-badge:nth-child(7)  { top: 52%; left: 22%;  animation-delay: 0.3s; }
+.sensor-badge:nth-child(8)  { top: 50%; right: 8%;  animation-delay: 1.8s; }
+.sensor-badge:nth-child(9)  { top: 65%; left: 8%;   animation-delay: 2.5s; }
+.sensor-badge:nth-child(10) { top: 63%; left: 48%;  animation-delay: 0.8s; }
+/* Dynamic fallback for 11+ badges */
+.sensor-badge:nth-child(n+11){
+  top: calc(8% + var(--badge-idx, 0) * 7%);
+  left: calc(6% + var(--badge-idx, 0) * 8%);
+  animation-delay: calc(var(--badge-idx, 0) * 0.5s);
 }
 
 @keyframes float {
@@ -659,7 +661,7 @@ a { color: inherit; transition: color 0.2s; }
   .hero-right-inner { padding: 2rem; }
   .hero-stat .num { font-size: 1.8rem; }
   .sensor-badge { font-size: 0.58rem; padding: 0.25rem 0.55rem; }
-  .sensor-badge:nth-child(n+7) { display: none; }
+  .sensor-badge:nth-child(n+9) { display: none; }
 
   .section-wrap { padding: 4rem 2rem; }
 
@@ -733,22 +735,29 @@ a { color: inherit; transition: color 0.2s; }
     position: relative; inset: auto;
     display: flex; flex-wrap: nowrap;
     overflow: hidden;
-    background: var(--ink);
-    padding: 0.75rem 0;
+    background: rgba(26,23,20,0.95);
+    padding: 1rem 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
   }
   .sensor-badges-track {
-    display: flex; flex-shrink: 0; gap: 0.75rem;
+    display: flex; flex-shrink: 0; gap: 1rem;
     animation: marquee var(--marquee-duration, 20s) linear infinite;
-    padding-right: 0.75rem;
+    padding-right: 1rem;
+    will-change: transform;
   }
   .sensor-badges:hover .sensor-badges-track {
     animation-play-state: paused;
   }
   .sensor-badge {
     position: relative; flex-shrink: 0;
+    top: auto; left: auto; right: auto; bottom: auto;
     animation: none;
-    font-size: 0.6rem; padding: 0.3rem 0.65rem;
+    font-size: 0.68rem; padding: 0.4rem 0.85rem;
     white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.8);
   }
   @keyframes marquee {
     0%   { transform: translateX(0); }
@@ -847,9 +856,9 @@ a { color: inherit; transition: color 0.2s; }
   .hero-tag { font-size: 0.65rem; margin-bottom: 1rem; }
   .hero-desc { font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.5rem; }
 
-  .sensor-badges { padding: 0.5rem 0; }
-  .sensor-badges-track { gap: 0.5rem; padding-right: 0.5rem; }
-  .sensor-badge { font-size: 0.55rem; padding: 0.25rem 0.5rem; }
+  .sensor-badges { padding: 0.75rem 0; }
+  .sensor-badges-track { gap: 0.75rem; padding-right: 0.75rem; }
+  .sensor-badge { font-size: 0.6rem; padding: 0.35rem 0.7rem; }
 
   .hero-right-inner { padding: 0.75rem; }
   .hero-stat { padding: 0.75rem; }
