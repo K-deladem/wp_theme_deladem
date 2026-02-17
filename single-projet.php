@@ -27,7 +27,7 @@
     <div class="section-wrap">
         <?php if ( has_post_thumbnail() ) : ?>
         <div class="projet-thumbnail">
-            <?php the_post_thumbnail( 'large', [ 'class' => 'projet-featured-img' ] ); ?>
+            <?php the_post_thumbnail( 'large', [ 'class' => 'projet-featured-img', 'alt' => esc_attr( get_the_title() ) ] ); ?>
         </div>
         <?php endif; ?>
 

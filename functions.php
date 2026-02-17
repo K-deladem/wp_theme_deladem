@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 define( 'DELADEM_VERSION', '2.1.0' );
 
 require_once get_template_directory() . '/inc/seeder.php';
+require_once get_template_directory() . '/inc/seo.php';
 
 /* ============================================================
    1. SETUP
@@ -420,6 +421,7 @@ function deladem_options_page() {
             'about_titre', 'about_sous_titre',
             'info_institution', 'info_labo', 'info_directeur', 'info_localisation', 'info_langues',
             'contact_email', 'contact_github', 'contact_linkedin', 'contact_orcid', 'contact_institution_url',
+            'seo_description',
             'partners_titre', 'partners_label',
             'footer_texte', 'footer_mention',
         ];
@@ -493,6 +495,7 @@ function deladem_options_page() {
         'contact_linkedin'  => '',
         'contact_orcid'     => '',
         'contact_institution_url' => 'https://uqac.ca',
+        'seo_description'   => '',
         'partners_label'    => 'Collaborations',
         'partners_titre'    => 'Partner Companies & Institutions',
         'footer_texte'      => '© ' . date('Y') . ' Deladem — HCI Researcher',
@@ -711,6 +714,23 @@ function deladem_options_page() {
                     <tr><th>URL ORCID</th><td><input type="url" name="contact_orcid" value="<?php echo g('contact_orcid',$d); ?>" class="regular-text" placeholder="https://orcid.org/0000-0000-0000-0000"></td></tr>
                     <tr><th>URL Institution</th><td><input type="url" name="contact_institution_url" value="<?php echo g('contact_institution_url',$d); ?>" class="regular-text" placeholder="https://uqac.ca"></td></tr>
                 </table>
+            </div>
+
+            <!-- ──── SEO ──── -->
+            <div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;">
+                <h2 style="margin-bottom:1rem;border-bottom:2px solid #C94A2D;padding-bottom:.5rem;">SEO & Référencement</h2>
+                <table class="form-table">
+                    <tr>
+                        <th>Meta description</th>
+                        <td>
+                            <textarea name="seo_description" rows="3" class="large-text" placeholder="Description du site pour Google (max 160 car.)"><?php echo g('seo_description',$d); ?></textarea>
+                            <p class="description">Apparaît dans les résultats Google. Si vide, la description du héro sera utilisée.</p>
+                        </td>
+                    </tr>
+                </table>
+                <div style="background:#f0f6ff;padding:1rem;border-radius:6px;margin-top:1rem;">
+                    <strong>SEO automatique :</strong> Le thème génère automatiquement les balises Open Graph (LinkedIn, Facebook), Twitter Cards, les données structurées JSON-LD (Person, ScholarlyArticle, ResearchProject) et l'URL canonique.
+                </div>
             </div>
 
             <!-- ──── FOOTER ──── -->

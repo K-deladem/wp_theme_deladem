@@ -30,6 +30,7 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
 
 <header class="site-header" role="banner">
   <div class="site-branding">
@@ -38,7 +39,7 @@
         $logo_id  = get_theme_mod( 'custom_logo' );
         $logo_url = wp_get_attachment_image_url( $logo_id, 'thumbnail' );
         if ( $logo_url ) : ?>
-          <img src="<?php echo esc_url( $logo_url ); ?>" alt="" class="site-avatar">
+          <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" class="site-avatar">
         <?php endif;
       endif; ?>
       <?php bloginfo('name'); ?> <span>·</span> HCI

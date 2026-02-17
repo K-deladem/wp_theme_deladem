@@ -84,6 +84,7 @@ function deladem_seed_options() {
         'contact_linkedin'        => 'https://linkedin.com/in/deladem-ihm',
         'contact_orcid'           => 'https://orcid.org/0000-0001-2345-6789',
         'contact_institution_url' => 'https://uqac.ca',
+        'seo_description'         => 'PhD researcher in Human-Computer Interaction at UQAC. Exploring innovative interfaces, accessibility, and user experience in interactive systems.',
 
         // Partners
         'partners_label'      => 'Collaborations',

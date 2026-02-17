@@ -492,7 +492,7 @@ a { color: inherit; transition: color 0.2s; }
 .pub-item:hover { background: var(--card); margin: 0 -1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; border-radius: var(--radius-sm); border-bottom-color: transparent; }
 
 .pub-year { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; padding-top: 0.15rem; min-width: 48px; }
-.pub-body h4 { font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; line-height: 1.4; }
+.pub-body h3 { font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; line-height: 1.4; }
 .pub-body .authors { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.3rem; }
 .pub-body .venue { font-size: 0.82rem; font-style: italic; color: var(--accent); }
 
@@ -805,7 +805,7 @@ a { color: inherit; transition: color 0.2s; }
     padding: 1.25rem 0;
   }
   .pub-year { font-size: 0.68rem; }
-  .pub-body h4 { font-size: 0.9rem; }
+  .pub-body h3 { font-size: 0.9rem; }
   .pub-body .authors, .pub-body .venue { font-size: 0.78rem; }
   .pub-type { justify-self: start; }
   .pub-item:hover { margin: 0; padding-left: 0; padding-right: 0; border-radius: 0; }
@@ -1041,3 +1041,18 @@ html[data-theme="dark"] .main-navigation--mobile.toggled { background: var(--bg)
 html[data-theme="dark"] .mobile-nav-header { border-bottom-color: var(--border); }
 html[data-theme="dark"] .mobile-nav-footer { border-top-color: var(--border); }
 html[data-theme="dark"] .mobile-nav-close { border-color: var(--border); color: var(--ink); }
+
+/* ─── Accessibility: Skip link & Screen reader text ─── */
+.screen-reader-text {
+  border: 0; clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%);
+  height: 1px; margin: -1px; overflow: hidden; padding: 0;
+  position: absolute; width: 1px; word-wrap: normal !important;
+}
+.skip-link:focus {
+  clip: auto !important; clip-path: none; display: block;
+  height: auto; width: auto; padding: 0.75rem 1.5rem;
+  position: fixed; top: 0.5rem; left: 0.5rem; z-index: 100000;
+  background: var(--accent); color: #fff; font-size: 0.9rem; font-weight: 600;
+  border-radius: var(--radius-sm); text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}

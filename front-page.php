@@ -281,7 +281,7 @@
       <a class="pub-item" href="<?php echo esc_url($url); ?>" <?php if($external) echo 'target="_blank" rel="noopener noreferrer"'; ?>>
         <div class="pub-year"><?php echo esc_html($annee); ?></div>
         <div class="pub-body">
-          <h4><?php the_title(); ?></h4>
+          <h3><?php the_title(); ?></h3>
           <?php if ($auteurs) echo '<div class="authors">' . esc_html($auteurs) . '</div>'; ?>
           <?php if ($revue)   echo '<div class="venue">'   . esc_html($revue)   . '</div>'; ?>
         </div>
