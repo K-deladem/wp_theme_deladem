@@ -3,12 +3,12 @@
 <!-- ══════ HERO ══════ -->
 <section id="hero">
   <div class="hero-left">
-    <p class="hero-tag"><?php echo esc_html( dlm_opt('hero_etiquette', 'Doctorant en Informatique') ); ?></p>
+    <p class="hero-tag"><?php echo esc_html( dlm_opt('hero_etiquette', 'PhD Student in Computer Science') ); ?></p>
 
     <h1 class="hero-title">
       <?php
-        $l1 = dlm_opt('hero_titre_ligne1', 'Chercheur en');
-        $em = dlm_opt('hero_titre_em', 'Interaction Humain–Machine');
+        $l1 = dlm_opt('hero_titre_ligne1', 'Researcher in');
+        $em = dlm_opt('hero_titre_em', 'Human–Computer Interaction');
         $l3 = dlm_opt('hero_titre_ligne3', '');
         if ($l1) echo esc_html($l1) . '<br>';
         if ($em) echo '<em>' . esc_html($em) . '</em>';
@@ -20,7 +20,7 @@
 
     <div class="hero-actions">
       <a href="<?php echo esc_url( dlm_opt('hero_btn1_url','#research') ); ?>" class="btn-primary">
-        <?php echo esc_html( dlm_opt('hero_btn1_label','Mes recherches →') ); ?>
+        <?php echo esc_html( dlm_opt('hero_btn1_label','My Research →') ); ?>
       </a>
       <?php $l2 = dlm_opt('hero_btn2_label'); if ( $l2 ) : ?>
       <a href="<?php echo esc_url( dlm_opt('hero_btn2_url','#publications') ); ?>" class="btn-secondary">
@@ -64,11 +64,11 @@
 </section>
 
 
-<!-- ══════ À PROPOS ══════ -->
+<!-- ══════ ABOUT ══════ -->
 <section id="about">
   <div class="section-wrap">
-    <p class="section-label">À propos</p>
-    <h2 class="section-title"><?php echo esc_html( dlm_opt('about_titre', 'Comprendre l\'humain par les données') ); ?></h2>
+    <p class="section-label">About</p>
+    <h2 class="section-title"><?php echo esc_html( dlm_opt('about_titre', 'Understanding Humans Through Data') ); ?></h2>
 
     <div class="about-grid">
       <div class="about-text fade-up">
@@ -77,16 +77,16 @@
         if ($texte) {
             echo wp_kses( wpautop($texte), [ 'p'=>[], 'strong'=>[], 'em'=>[], 'a'=>['href'=>[],'target'=>[],'rel'=>[]], 'br'=>[] ] );
         } else { ?>
-          <p>Je suis doctorant en informatique à l'<strong>Université du Québec à Chicoutimi (UQAC)</strong>, sous la direction du Professeur Bob-Antoine Jerry Ménélas.</p>
-          <p>Mes travaux portent sur la conception de <strong>systèmes d'acquisition de données physiologiques multi-capteurs</strong> pour la recherche en IHM, combinant EEG, ECG, eye-tracker et caméra thermique via <strong>Lab Streaming Layer</strong>.</p>
-          <p style="color:var(--accent);font-size:.9rem;"><em>→ Modifiez ce texte dans Apparence &gt; Options Deladem &gt; Section À propos</em></p>
+          <p>I am a PhD student in Computer Science at <strong>Université du Québec à Chicoutimi (UQAC)</strong>, under the supervision of Professor Bob-Antoine Jerry Ménélas.</p>
+          <p>My research focuses on designing <strong>multi-sensor physiological data acquisition systems</strong> for HCI research, combining EEG, ECG, eye-tracker and thermal camera via <strong>Lab Streaming Layer</strong>.</p>
+          <p style="color:var(--accent);font-size:.9rem;"><em>→ Edit this text in Appearance &gt; Deladem Options &gt; About section</em></p>
         <?php } ?>
       </div>
 
       <div class="about-sidebar fade-up">
         <div class="info-block">
           <?php
-          // Laboratoires multiples
+          // Multiple labs
           $labos = get_option( 'dlm_info_labos', [] );
           if ( empty( $labos ) ) {
               $legacy = dlm_opt( 'info_labo', '' );
@@ -94,7 +94,7 @@
           }
           $labos_str = implode( ' · ', array_filter( $labos ) );
 
-          // Directeurs multiples
+          // Multiple supervisors
           $directeurs = get_option( 'dlm_info_directeurs', [] );
           if ( empty( $directeurs ) ) {
               $legacy = dlm_opt( 'info_directeur', '' );
@@ -104,10 +104,10 @@
 
           $rows = [
             '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>' => ['Institution', dlm_opt('info_institution','UQAC')],
-            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>' => ['Laboratoire(s)', $labos_str],
-            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' => ['Directeur(s)', $directeurs_str],
-            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' => ['Localisation', dlm_opt('info_localisation','Québec, Canada')],
-            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' => ['Langues', dlm_opt('info_langues','Français · Anglais')],
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>' => ['Lab(s)', $labos_str],
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' => ['Supervisor(s)', $directeurs_str],
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' => ['Location', dlm_opt('info_localisation','Quebec, Canada')],
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' => ['Languages', dlm_opt('info_langues','French · English')],
           ];
           $email = dlm_opt('contact_email');
           if ( $email ) $rows['<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>'] = ['Email', $email];
@@ -136,13 +136,13 @@
 
 <div class="section-divider"></div>
 
-<!-- ══════ INTÉRÊTS DE RECHERCHE ══════ -->
+<!-- ══════ RESEARCH INTERESTS ══════ -->
 <?php $interets = get_option( 'dlm_interets', [] ); if ( ! empty( $interets ) ) : ?>
 <section id="interets">
   <div class="section-wrap">
-    <p class="section-label">Domaines</p>
-    <h2 class="section-title">Int&eacute;r&ecirc;ts de recherche</h2>
-    <p class="section-sub">Cliquez pour en savoir plus sur chaque domaine.</p>
+    <p class="section-label">Fields</p>
+    <h2 class="section-title">Research Interests</h2>
+    <p class="section-sub">Click to learn more about each field.</p>
     <div class="interets-list">
       <?php foreach ( $interets as $idx => $int ) :
         $has_url  = ! empty( $int['url'] );
@@ -168,7 +168,7 @@
             <?php endif; ?>
             <?php if ( $has_url ) : ?>
               <a href="<?php echo esc_url( $int['url'] ); ?>" class="interet-link" target="_blank" rel="noopener noreferrer">
-                Voir sur internet &rarr;
+                View online &rarr;
               </a>
             <?php endif; ?>
           </div>
@@ -183,12 +183,12 @@
 <?php endif; ?>
 
 
-<!-- ══════ PARTENAIRES / LOGOS ══════ -->
+<!-- ══════ PARTNERS / LOGOS ══════ -->
 <?php $partners_q = deladem_get_partenaires(20); if ( $partners_q->have_posts() ) : ?>
 <section id="partners">
   <div class="partners-inner">
     <p class="section-label"><?php echo esc_html( dlm_opt('partners_label','Collaborations') ); ?></p>
-    <h2 class="section-title"><?php echo esc_html( dlm_opt('partners_titre','Entreprises & institutions partenaires') ); ?></h2>
+    <h2 class="section-title"><?php echo esc_html( dlm_opt('partners_titre','Partner Companies & Institutions') ); ?></h2>
 
     <div class="partners-grid">
       <?php while ( $partners_q->have_posts() ) : $partners_q->the_post();
@@ -219,12 +219,12 @@
 
 <div class="section-divider"></div>
 
-<!-- ══════ PROJETS ══════ -->
+<!-- ══════ PROJECTS ══════ -->
 <section id="research">
   <div class="section-wrap">
-    <p class="section-label">Axes de recherche</p>
-    <h2 class="section-title">Projets en cours</h2>
-    <p class="section-sub">Systèmes multimodaux, réalité virtuelle et physiologie pour l'IHM.</p>
+    <p class="section-label">Research Areas</p>
+    <h2 class="section-title">Current Projects</h2>
+    <p class="section-sub">Multimodal systems, virtual reality and physiology for HCI.</p>
 
     <?php $projets_q = deladem_get_projets(6); ?>
 
@@ -247,8 +247,8 @@
     <?php else : ?>
     <div style="padding:3rem;text-align:center;border:2px dashed var(--border);border-radius:16px;color:var(--muted);">
       <p style="margin-bottom:1rem;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></p>
-      <p><strong>Aucun projet publié pour l'instant.</strong></p>
-      <p>Allez dans <strong>Tableau de bord → Projets → Ajouter</strong> pour créer vos premiers projets de recherche.</p>
+      <p><strong>No projects published yet.</strong></p>
+      <p>Go to <strong>Dashboard → Projects → Add New</strong> to create your first research projects.</p>
     </div>
     <?php endif; ?>
   </div>
@@ -261,8 +261,8 @@
 <section id="publications">
   <div class="section-wrap">
     <p class="section-label">Publications</p>
-    <h2 class="section-title">Travaux académiques</h2>
-    <p class="section-sub">Articles, conférences et contributions scientifiques.</p>
+    <h2 class="section-title">Academic Works</h2>
+    <p class="section-sub">Articles, conferences and scientific contributions.</p>
 
     <?php $pubs_q = deladem_get_publications(15); ?>
 
@@ -274,7 +274,7 @@
         $revue   = get_post_meta( get_the_ID(), '_pub_revue',   true );
         $type    = get_post_meta( get_the_ID(), '_pub_type',    true );
         $doi     = get_post_meta( get_the_ID(), '_pub_doi',     true );
-        $labels  = [ 'conference' => 'Conférence', 'journal' => 'Revue', 'poster' => 'Poster', 'rapport' => 'Rapport', 'these' => 'Thèse', 'workshop' => 'Workshop' ];
+        $labels  = [ 'conference' => 'Conference', 'journal' => 'Journal', 'poster' => 'Poster', 'rapport' => 'Report', 'these' => 'Thesis', 'workshop' => 'Workshop' ];
         $url = $doi ?: get_permalink();
         $external = (bool) $doi;
       ?>
@@ -294,8 +294,8 @@
     <?php else : ?>
     <div style="padding:3rem;text-align:center;border:2px dashed var(--border);border-radius:16px;color:var(--muted);">
       <p style="margin-bottom:1rem;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></p>
-      <p><strong>Aucune publication pour l'instant.</strong></p>
-      <p>Allez dans <strong>Tableau de bord → Publications → Ajouter</strong>.</p>
+      <p><strong>No publications yet.</strong></p>
+      <p>Go to <strong>Dashboard → Publications → Add New</strong>.</p>
     </div>
     <?php endif; ?>
   </div>
@@ -304,17 +304,17 @@
 <div class="section-divider"></div>
 
 
-<!-- ══════ CV / PARCOURS ══════ -->
+<!-- ══════ CV / BACKGROUND ══════ -->
 <section id="cv">
   <div class="section-wrap">
-    <p class="section-label">Parcours</p>
-    <h2 class="section-title">Formation &amp; Expérience</h2>
-    <p class="section-sub">Académique, enseignement et consulting.</p>
+    <p class="section-label">Background</p>
+    <h2 class="section-title">Education &amp; Experience</h2>
+    <p class="section-sub">Academic, teaching and consulting.</p>
 
     <div class="cv-cols fade-up">
-      <!-- Formations -->
+      <!-- Education -->
       <div>
-        <h3 class="cv-section-title">Formation</h3>
+        <h3 class="cv-section-title">Education</h3>
         <?php
         $formations = deladem_get_cv('formation');
         if ( $formations->have_posts() ) :
@@ -340,14 +340,14 @@
         </div>
         <?php endforeach;
         else : ?>
-        <p style="color:var(--muted);font-size:.875rem;font-style:italic;">→ Ajoutez vos formations dans <strong>CV / Parcours → Ajouter</strong> avec la catégorie "Formation".</p>
+        <p style="color:var(--muted);font-size:.875rem;font-style:italic;">→ Add your education in <strong>CV / Background → Add New</strong> with the "Formation" category.</p>
         <?php endif; ?>
 
-        <!-- Compétences -->
+        <!-- Skills -->
         <?php
         $competences_q = deladem_get_cv('competence');
         if ( $competences_q->have_posts() ) : ?>
-        <h3 class="cv-section-title" style="margin-top:2rem;">Compétences</h3>
+        <h3 class="cv-section-title" style="margin-top:2rem;">Skills</h3>
         <div class="skills-grid">
           <?php while ($competences_q->have_posts()) : $competences_q->the_post(); ?>
           <span class="skill-chip"><?php the_title(); ?></span>
@@ -356,9 +356,9 @@
         <?php endif; ?>
       </div>
 
-      <!-- Expériences -->
+      <!-- Experience -->
       <div>
-        <h3 class="cv-section-title">Expérience</h3>
+        <h3 class="cv-section-title">Experience</h3>
         <?php
         $experiences = deladem_get_cv('experience');
         if ( $experiences->have_posts() ) :
@@ -381,7 +381,7 @@
         </div>
         <?php endforeach;
         else : ?>
-        <p style="color:var(--muted);font-size:.875rem;font-style:italic;">→ Ajoutez vos expériences dans <strong>CV / Parcours → Ajouter</strong> avec la catégorie "Expérience professionnelle".</p>
+        <p style="color:var(--muted);font-size:.875rem;font-style:italic;">→ Add your experience in <strong>CV / Background → Add New</strong> with the "Professional experience" category.</p>
         <?php endif; ?>
       </div>
     </div>
@@ -394,8 +394,8 @@
   <div class="contact-inner">
     <div>
       <p class="section-label">Contact</p>
-      <h2 class="section-title">Travaillons ensemble</h2>
-      <p class="section-sub">Collaborations de recherche, enseignement ou consulting IT.</p>
+      <h2 class="section-title">Let's Work Together</h2>
+      <p class="section-sub">Research collaborations, teaching or IT consulting.</p>
 
       <div class="contact-links">
         <?php $em = dlm_opt('contact_email'); if ( $em ) : ?>
@@ -413,33 +413,32 @@
         <?php $gh = dlm_opt('contact_github'); if ( $gh ) : ?>
         <a class="contact-link" href="<?php echo esc_url($gh); ?>" target="_blank" rel="noopener noreferrer">
           <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></span>
-          <div><div class="link-label">GitHub</div><div>Projets &amp; code source</div></div>
+          <div><div class="link-label">GitHub</div><div>Projects &amp; source code</div></div>
         </a>
         <?php endif; ?>
 
         <?php $li = dlm_opt('contact_linkedin'); if ( $li ) : ?>
         <a class="contact-link" href="<?php echo esc_url($li); ?>" target="_blank" rel="noopener noreferrer">
           <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span>
-          <div><div class="link-label">LinkedIn</div><div>Profil professionnel</div></div>
+          <div><div class="link-label">LinkedIn</div><div>Professional profile</div></div>
         </a>
         <?php endif; ?>
       </div>
     </div>
 
-    <!-- Formulaire -->
+    <!-- Form -->
     <div>
       <?php if ( shortcode_exists('contact-form-7') ) :
-        // Remplace "1" par l'ID de ton formulaire CF7
         echo do_shortcode('[contact-form-7 id="1" title="Contact"]');
       else : ?>
       <form class="contact-form-wp" method="post" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>">
         <?php wp_nonce_field('deladem_contact','deladem_contact_nonce'); ?>
         <input type="hidden" name="action" value="deladem_contact">
-        <label>Votre nom<input type="text" name="contact_name" placeholder="Marie Tremblay" required></label>
-        <label>Email<input type="email" name="contact_email" placeholder="marie@exemple.com" required></label>
-        <label>Sujet<input type="text" name="contact_subject" placeholder="Collaboration de recherche" required></label>
-        <label>Message<textarea name="contact_message" placeholder="Décrivez votre demande..." required></textarea></label>
-        <input type="submit" value="Envoyer le message →">
+        <label>Your name<input type="text" name="contact_name" placeholder="Marie Tremblay" required></label>
+        <label>Email<input type="email" name="contact_email" placeholder="marie@example.com" required></label>
+        <label>Subject<input type="text" name="contact_subject" placeholder="Research collaboration" required></label>
+        <label>Message<textarea name="contact_message" placeholder="Describe your request..." required></textarea></label>
+        <input type="submit" value="Send message →">
       </form>
       <?php endif; ?>
     </div>

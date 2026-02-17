@@ -1,9 +1,9 @@
 <?php
 /**
- * Deladem IHM — Seeder de données fictives
+ * Deladem IHM — Demo Data Seeder
  *
- * Remplit le thème avec un contenu de démonstration complet
- * lors de la première activation. Exécuté une seule fois.
+ * Populates the theme with complete demo content
+ * on first activation. Runs only once.
  *
  * @package Deladem_IHM
  */
@@ -11,7 +11,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Vérifie si un post existe déjà par titre et type (compatible WP 6.2+).
+ * Check if a post already exists by title and type (WP 6.2+ compatible).
  */
 function deladem_post_exists( $title, $post_type ) {
     $q = new WP_Query( [
@@ -25,7 +25,7 @@ function deladem_post_exists( $title, $post_type ) {
 }
 
 /**
- * Vérifie si le seeding a déjà été fait et l'exécute sinon.
+ * Check if seeding has already been done and run it if not.
  */
 function deladem_maybe_seed() {
     if ( get_option( 'dlm_seeded' ) ) {
@@ -42,55 +42,55 @@ function deladem_maybe_seed() {
 }
 
 /**
- * Seed : options du thème (hero, about, contact, footer, badges, stats, intérêts).
+ * Seed: theme options (hero, about, contact, footer, badges, stats, interests).
  */
 function deladem_seed_options() {
 
     $options = [
         // Hero
-        'hero_etiquette'      => 'Doctorant en Informatique',
-        'hero_titre_ligne1'   => 'Chercheur en',
-        'hero_titre_em'       => 'Interaction Humain–Machine',
+        'hero_etiquette'      => 'PhD Student in Computer Science',
+        'hero_titre_ligne1'   => 'Researcher in',
+        'hero_titre_em'       => 'Human–Computer Interaction',
         'hero_titre_ligne3'   => '',
-        'hero_description'    => 'Je conçois des systèmes d\'acquisition de données physiologiques multi-capteurs pour comprendre comment les humains interagissent avec les technologies numériques.',
-        'hero_btn1_label'     => 'Mes recherches →',
+        'hero_description'    => 'I design multi-sensor physiological data acquisition systems to understand how humans interact with digital technologies.',
+        'hero_btn1_label'     => 'My Research →',
         'hero_btn1_url'       => '#research',
         'hero_btn2_label'     => 'Publications',
         'hero_btn2_url'       => '#publications',
 
         // Stats
         'hero_stat1_num'      => '4+',
-        'hero_stat1_label'    => 'Capteurs intégrés',
+        'hero_stat1_label'    => 'Integrated Sensors',
         'hero_stat2_num'      => 'LSL',
-        'hero_stat2_label'    => 'Synchronisation',
+        'hero_stat2_label'    => 'Synchronization',
         'hero_stat3_num'      => 'VR',
         'hero_stat3_label'    => 'Unity / XR',
         'hero_stat4_num'      => 'PhD',
         'hero_stat4_label'    => 'UQAC · LRIT',
 
         // About
-        'about_titre'         => 'Comprendre l\'humain par les données',
+        'about_titre'         => 'Understanding Humans Through Data',
         'about_sous_titre'    => '',
-        'about_texte'         => '<strong>Passionné par l\'intersection entre technologie et cognition humaine</strong>, je mène des recherches sur l\'acquisition et l\'analyse de données physiologiques multi-capteurs.<br><br>Mon travail vise à développer des systèmes innovants qui capturent simultanément les signaux EEG, ECG, le suivi oculaire et l\'imagerie thermique pour mieux comprendre l\'expérience utilisateur en réalité virtuelle.<br><br>Je m\'intéresse particulièrement à la <strong>synchronisation temporelle</strong> des flux de données hétérogènes via le protocole <strong>Lab Streaming Layer (LSL)</strong>, permettant une analyse multimodale précise des interactions humain-machine.',
+        'about_texte'         => '<strong>Passionate about the intersection of technology and human cognition</strong>, I conduct research on the acquisition and analysis of multi-sensor physiological data.<br><br>My work aims to develop innovative systems that simultaneously capture EEG, ECG, eye-tracking and thermal imaging signals to better understand the user experience in virtual reality.<br><br>I am particularly interested in <strong>temporal synchronization</strong> of heterogeneous data streams via the <strong>Lab Streaming Layer (LSL)</strong> protocol, enabling precise multimodal analysis of human-computer interactions.',
 
         // Info sidebar
         'info_institution'    => 'Université du Québec à Chicoutimi (UQAC)',
-        'info_localisation'   => 'Québec, Canada',
-        'info_langues'        => 'Français · Anglais',
+        'info_localisation'   => 'Quebec, Canada',
+        'info_langues'        => 'French · English',
 
         // Contact
-        'contact_email'           => 'chercheur@example.uqac.ca',
+        'contact_email'           => 'researcher@example.uqac.ca',
         'contact_github'          => 'https://github.com/deladem-ihm',
         'contact_linkedin'        => 'https://linkedin.com/in/deladem-ihm',
         'contact_institution_url' => 'https://uqac.ca',
 
         // Partners
         'partners_label'      => 'Collaborations',
-        'partners_titre'      => 'Entreprises & institutions partenaires',
+        'partners_titre'      => 'Partner Companies & Institutions',
 
         // Footer
-        'footer_texte'        => '© ' . date( 'Y' ) . ' Deladem — Chercheur en IHM',
-        'footer_mention'      => 'Construit avec passion · Québec, Canada',
+        'footer_texte'        => '© ' . date( 'Y' ) . ' Deladem — HCI Researcher',
+        'footer_mention'      => 'Built with passion · Quebec, Canada',
     ];
 
     foreach ( $options as $key => $value ) {
@@ -111,7 +111,7 @@ function deladem_seed_options() {
         ] );
     }
 
-    // Directeurs
+    // Supervisors
     if ( ! get_option( 'dlm_info_directeurs' ) ) {
         update_option( 'dlm_info_directeurs', [
             'Prof. Bob-Antoine Jerry Ménélas',
@@ -119,40 +119,40 @@ function deladem_seed_options() {
         ] );
     }
 
-    // Labos
+    // Labs
     if ( ! get_option( 'dlm_info_labos' ) ) {
         update_option( 'dlm_info_labos', [
-            'Laboratoire de Recherche en Interfaces & Technologies (LRIT)',
-            'Groupe de Recherche en Informatique de l\'UQAC (GRI)',
+            'Interfaces & Technologies Research Lab (LRIT)',
+            'UQAC Computer Science Research Group (GRI)',
         ] );
     }
 
-    // Intérêts de recherche
+    // Research interests
     if ( ! get_option( 'dlm_interets' ) ) {
         update_option( 'dlm_interets', [
             [
-                'titre' => 'Acquisition multi-capteurs',
-                'desc'  => 'Développement de pipelines d\'acquisition synchronisée pour EEG, ECG, eye-tracking et imagerie thermique via Lab Streaming Layer (LSL).',
+                'titre' => 'Multi-Sensor Acquisition',
+                'desc'  => 'Development of synchronized acquisition pipelines for EEG, ECG, eye-tracking and thermal imaging via Lab Streaming Layer (LSL).',
                 'url'   => 'https://labstreaminglayer.org/',
             ],
             [
-                'titre' => 'Réalité virtuelle & immersion',
-                'desc'  => 'Conception d\'environnements VR avec Unity/XR pour l\'étude des réponses physiologiques en contexte immersif.',
+                'titre' => 'Virtual Reality & Immersion',
+                'desc'  => 'Design of VR environments with Unity/XR for studying physiological responses in immersive contexts.',
                 'url'   => 'https://unity.com/solutions/xr',
             ],
             [
-                'titre' => 'Analyse de données physiologiques',
-                'desc'  => 'Traitement et visualisation de signaux multimodaux : filtrage, segmentation, extraction de features et machine learning.',
+                'titre' => 'Physiological Data Analysis',
+                'desc'  => 'Processing and visualization of multimodal signals: filtering, segmentation, feature extraction and machine learning.',
                 'url'   => '',
             ],
             [
-                'titre' => 'Expérience utilisateur (UX)',
-                'desc'  => 'Évaluation objective de l\'UX par mesures physiologiques : charge cognitive, stress, engagement et attention visuelle.',
+                'titre' => 'User Experience (UX)',
+                'desc'  => 'Objective UX evaluation through physiological measures: cognitive load, stress, engagement and visual attention.',
                 'url'   => '',
             ],
             [
-                'titre' => 'Interfaces cerveau-ordinateur (BCI)',
-                'desc'  => 'Exploration des paradigmes BCI passifs pour la détection d\'états mentaux en temps réel lors d\'interactions numériques.',
+                'titre' => 'Brain-Computer Interfaces (BCI)',
+                'desc'  => 'Exploration of passive BCI paradigms for real-time mental state detection during digital interactions.',
                 'url'   => 'https://openbci.com/',
             ],
         ] );
@@ -160,63 +160,63 @@ function deladem_seed_options() {
 }
 
 /**
- * Seed : projets de recherche.
+ * Seed: research projects.
  */
 function deladem_seed_projets() {
     $projets = [
         [
-            'title'   => 'Plateforme multi-capteurs LSL',
-            'excerpt' => 'Architecture logicielle pour l\'acquisition synchronisée de données EEG, ECG, eye-tracking et thermiques en temps réel.',
-            'content' => '<h2>Contexte</h2>
-<p>Ce projet vise à créer une plateforme unifiée permettant l\'acquisition simultanée de multiples flux de données physiologiques. En utilisant le protocole Lab Streaming Layer (LSL), nous synchronisons les données avec une précision temporelle sub-milliseconde.</p>
+            'title'   => 'LSL Multi-Sensor Platform',
+            'excerpt' => 'Software architecture for synchronized real-time acquisition of EEG, ECG, eye-tracking and thermal data.',
+            'content' => '<h2>Context</h2>
+<p>This project aims to create a unified platform for simultaneous acquisition of multiple physiological data streams. Using the Lab Streaming Layer (LSL) protocol, we synchronize data with sub-millisecond temporal precision.</p>
 
-<h2>Objectifs</h2>
+<h2>Objectives</h2>
 <ul>
-<li>Intégrer 4+ capteurs physiologiques dans un pipeline unifié</li>
-<li>Garantir une synchronisation temporelle inférieure à 1ms</li>
-<li>Développer une interface de monitoring en temps réel</li>
-<li>Fournir des outils d\'export pour l\'analyse post-hoc</li>
+<li>Integrate 4+ physiological sensors into a unified pipeline</li>
+<li>Ensure temporal synchronization under 1ms</li>
+<li>Develop a real-time monitoring interface</li>
+<li>Provide export tools for post-hoc analysis</li>
 </ul>
 
-<h2>Technologies utilisées</h2>
-<p>Python, Lab Streaming Layer (LSL), Qt/PySide6 pour l\'interface, MNE-Python pour le traitement EEG, et InfluxDB pour le stockage temporel.</p>',
-            'tags'    => 'Python, LSL, EEG, ECG, Eye-Tracking, Temps réel',
+<h2>Technologies</h2>
+<p>Python, Lab Streaming Layer (LSL), Qt/PySide6 for the interface, MNE-Python for EEG processing, and InfluxDB for time-series storage.</p>',
+            'tags'    => 'Python, LSL, EEG, ECG, Eye-Tracking, Real-time',
             'ordre'   => 1,
         ],
         [
-            'title'   => 'Environnements VR adaptatifs',
-            'excerpt' => 'Développement d\'environnements de réalité virtuelle qui s\'adaptent en temps réel aux états physiologiques de l\'utilisateur.',
-            'content' => '<h2>Contexte</h2>
-<p>Ce projet explore la création d\'environnements immersifs capables de modifier dynamiquement leur complexité, éclairage et interactions en fonction des mesures physiologiques de l\'utilisateur (stress, attention, fatigue).</p>
+            'title'   => 'Adaptive VR Environments',
+            'excerpt' => 'Development of virtual reality environments that adapt in real-time to the user\'s physiological states.',
+            'content' => '<h2>Context</h2>
+<p>This project explores the creation of immersive environments capable of dynamically modifying their complexity, lighting and interactions based on the user\'s physiological measurements (stress, attention, fatigue).</p>
 
-<h2>Approche</h2>
-<p>Nous utilisons Unity avec le framework XR Interaction Toolkit, couplé à notre plateforme LSL pour recevoir les données physiologiques en temps réel. Un module d\'inférence basé sur des modèles de machine learning classifie l\'état cognitif et déclenche des adaptations environnementales.</p>
+<h2>Approach</h2>
+<p>We use Unity with the XR Interaction Toolkit framework, coupled with our LSL platform to receive physiological data in real-time. An inference module based on machine learning models classifies cognitive state and triggers environmental adaptations.</p>
 
-<h2>Résultats préliminaires</h2>
-<p>Les premiers tests montrent une réduction significative de la surcharge cognitive (-23%) et une amélioration de l\'engagement (+18%) lorsque l\'environnement s\'adapte aux états détectés.</p>',
-            'tags'    => 'Unity, XR, VR, Physiologie, Machine Learning',
+<h2>Preliminary Results</h2>
+<p>Initial tests show a significant reduction in cognitive overload (-23%) and improved engagement (+18%) when the environment adapts to detected states.</p>',
+            'tags'    => 'Unity, XR, VR, Physiology, Machine Learning',
             'ordre'   => 2,
         ],
         [
-            'title'   => 'Charge cognitive en contexte immersif',
-            'excerpt' => 'Étude de la charge cognitive lors d\'interactions en réalité virtuelle à l\'aide de mesures EEG et oculométriques.',
+            'title'   => 'Cognitive Load in Immersive Contexts',
+            'excerpt' => 'Study of cognitive load during virtual reality interactions using EEG and eye-tracking measures.',
             'content' => '<h2>Description</h2>
-<p>Cette recherche combine l\'électroencéphalographie (EEG) et le suivi oculaire pour quantifier la charge cognitive lors de tâches d\'interaction en réalité virtuelle. Nous développons des indices composites multimodaux permettant une évaluation continue et non-invasive de l\'effort mental.</p>
+<p>This research combines electroencephalography (EEG) and eye-tracking to quantify cognitive load during interaction tasks in virtual reality. We develop multimodal composite indices enabling continuous, non-invasive assessment of mental effort.</p>
 
-<h2>Méthodologie</h2>
-<p>Protocole expérimental avec 30 participants, tâches de complexité croissante en VR, acquisition simultanée EEG (32 canaux) + eye-tracking (120 Hz). Analyse par régression linéaire mixte et classification par SVM.</p>',
-            'tags'    => 'EEG, Eye-Tracking, Charge cognitive, VR, Statistiques',
+<h2>Methodology</h2>
+<p>Experimental protocol with 30 participants, tasks of increasing complexity in VR, simultaneous acquisition of EEG (32 channels) + eye-tracking (120 Hz). Analysis by mixed linear regression and SVM classification.</p>',
+            'tags'    => 'EEG, Eye-Tracking, Cognitive Load, VR, Statistics',
             'ordre'   => 3,
         ],
         [
-            'title'   => 'Détection de stress par thermographie',
-            'excerpt' => 'Utilisation de caméras thermiques infrarouges pour la détection non-invasive du stress lors d\'interactions numériques.',
-            'content' => '<h2>Objectif</h2>
-<p>Développer un système de détection du stress basé sur la thermographie faciale. Les variations de température au niveau du nez, du front et de la région péri-orbitale sont des marqueurs fiables de l\'activation du système nerveux sympathique.</p>
+            'title'   => 'Stress Detection via Thermography',
+            'excerpt' => 'Using infrared thermal cameras for non-invasive stress detection during digital interactions.',
+            'content' => '<h2>Objective</h2>
+<p>Develop a stress detection system based on facial thermography. Temperature variations in the nose, forehead and periorbital region are reliable markers of sympathetic nervous system activation.</p>
 
 <h2>Innovation</h2>
-<p>Notre approche combine la thermographie avec des mesures ECG (variabilité de fréquence cardiaque) pour créer un indice de stress multimodal robuste, applicable en conditions écologiques.</p>',
-            'tags'    => 'Thermographie, FLIR, ECG, HRV, Stress, OpenCV',
+<p>Our approach combines thermography with ECG measurements (heart rate variability) to create a robust multimodal stress index, applicable in ecological conditions.</p>',
+            'tags'    => 'Thermography, FLIR, ECG, HRV, Stress, OpenCV',
             'ordre'   => 4,
         ],
     ];
@@ -240,7 +240,7 @@ function deladem_seed_projets() {
 }
 
 /**
- * Seed : publications académiques.
+ * Seed: academic publications.
  */
 function deladem_seed_publications() {
     $publications = [
@@ -277,18 +277,18 @@ function deladem_seed_publications() {
             'doi'     => '',
         ],
         [
-            'title'   => 'État de l\'art : systèmes multi-capteurs pour l\'évaluation de l\'expérience utilisateur',
+            'title'   => 'State of the Art: Multi-Sensor Systems for User Experience Evaluation',
             'annee'   => 2023,
             'auteurs' => 'Deladem K.',
-            'revue'   => 'Rapport de recherche, UQAC',
+            'revue'   => 'Research Report, UQAC',
             'type'    => 'rapport',
             'doi'     => '',
         ],
         [
-            'title'   => 'Conception d\'une plateforme d\'acquisition multimodale pour l\'étude de l\'IHM en réalité virtuelle',
+            'title'   => 'Design of a Multimodal Acquisition Platform for HCI Research in Virtual Reality',
             'annee'   => 2026,
             'auteurs' => 'Deladem K.',
-            'revue'   => 'Thèse de doctorat, Université du Québec à Chicoutimi',
+            'revue'   => 'PhD Thesis, Université du Québec à Chicoutimi',
             'type'    => 'these',
             'doi'     => '',
         ],
@@ -314,7 +314,7 @@ function deladem_seed_publications() {
 }
 
 /**
- * Seed : partenaires (sans logo, avec initiales).
+ * Seed: partners (no logo, with initials).
  */
 function deladem_seed_partenaires() {
     $partenaires = [
@@ -374,26 +374,26 @@ function deladem_seed_partenaires() {
 }
 
 /**
- * Seed : entrées CV (formations, expériences, compétences).
+ * Seed: CV entries (education, experience, skills).
  */
 function deladem_seed_cv() {
 
-    // Formations
+    // Education
     $formations = [
         [
-            'title'         => 'Doctorat en Informatique',
-            'periode'       => '2022 — En cours',
+            'title'         => 'PhD in Computer Science',
+            'periode'       => '2022 — Present',
             'etablissement' => 'UQAC, Chicoutimi QC',
             'ordre'         => 1,
         ],
         [
-            'title'         => 'Maîtrise en Informatique',
+            'title'         => 'MSc in Computer Science',
             'periode'       => '2019 — 2022',
             'etablissement' => 'UQAC, Chicoutimi QC',
             'ordre'         => 2,
         ],
         [
-            'title'         => 'Baccalauréat en Génie logiciel',
+            'title'         => 'BSc in Software Engineering',
             'periode'       => '2015 — 2019',
             'etablissement' => 'Université de Lomé, Togo',
             'ordre'         => 3,
@@ -417,30 +417,30 @@ function deladem_seed_cv() {
         }
     }
 
-    // Expériences
+    // Experience
     $experiences = [
         [
-            'title'         => 'Assistant de recherche — LRIT',
-            'periode'       => '2022 — En cours',
+            'title'         => 'Research Assistant — LRIT',
+            'periode'       => '2022 — Present',
             'etablissement' => 'UQAC, Chicoutimi QC',
             'ordre'         => 1,
         ],
         [
-            'title'         => 'Chargé de cours — Introduction à la programmation',
+            'title'         => 'Lecturer — Introduction to Programming',
             'periode'       => '2023 — 2024',
-            'etablissement' => 'UQAC, Département d\'informatique',
+            'etablissement' => 'UQAC, Computer Science Department',
             'ordre'         => 2,
         ],
         [
-            'title'         => 'Développeur Full-Stack (Stage)',
+            'title'         => 'Full-Stack Developer (Internship)',
             'periode'       => '2021 — 2022',
-            'etablissement' => 'Tech Solutions Inc., Montréal QC',
+            'etablissement' => 'Tech Solutions Inc., Montreal QC',
             'ordre'         => 3,
         ],
         [
-            'title'         => 'Consultant IT Freelance',
+            'title'         => 'Freelance IT Consultant',
             'periode'       => '2019 — 2021',
-            'etablissement' => 'Clients divers, Togo & Canada',
+            'etablissement' => 'Various clients, Togo & Canada',
             'ordre'         => 4,
         ],
     ];
@@ -462,7 +462,7 @@ function deladem_seed_cv() {
         }
     }
 
-    // Compétences
+    // Skills
     $competences = [
         'Python', 'JavaScript', 'C#', 'Unity / XR',
         'Lab Streaming Layer', 'MNE-Python', 'OpenCV',

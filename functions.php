@@ -19,7 +19,7 @@ function deladem_setup() {
     add_image_size( 'partner-logo', 300, 150, false );
     add_theme_support( 'html5', [ 'search-form', 'comment-form', 'gallery', 'caption', 'style', 'script' ] );
     add_theme_support( 'custom-logo', [ 'height' => 40, 'width' => 40, 'flex-height' => true, 'flex-width' => true ] );
-    register_nav_menus( [ 'primary' => __( 'Menu principal', 'deladem-ihm' ) ] );
+    register_nav_menus( [ 'primary' => __( 'Primary Menu', 'deladem-ihm' ) ] );
 }
 add_action( 'after_setup_theme', 'deladem_setup' );
 
@@ -60,11 +60,11 @@ function deladem_enqueue_assets() {
     );
     wp_enqueue_style( 'deladem-main',
         get_template_directory_uri() . '/assets/css/main.css',
-        [ 'deladem-fonts' ], DELADEM_VERSION
+        [ 'deladem-fonts' ], filemtime( get_template_directory() . '/assets/css/main.css' )
     );
     wp_enqueue_script( 'deladem-main',
         get_template_directory_uri() . '/assets/js/main.js',
-        [], DELADEM_VERSION, true
+        [], filemtime( get_template_directory() . '/assets/js/main.js' ), true
     );
 }
 add_action( 'wp_enqueue_scripts', 'deladem_enqueue_assets' );
@@ -463,39 +463,39 @@ function deladem_options_page() {
         }
         update_option( 'dlm_interets', $interets );
 
-        echo '<div class="notice notice-success is-dismissible"><p>Options sauvegard&eacute;es avec succ&egrave;s !</p></div>';
+        echo '<div class="notice notice-success is-dismissible"><p>Options saved successfully!</p></div>';
     }
 
     // Valeurs par défaut
     $d = [
-        'hero_etiquette'    => 'Doctorant en Informatique',
-        'hero_titre_ligne1' => 'Chercheur en',
-        'hero_titre_em'     => 'Interaction Humain–Machine',
+        'hero_etiquette'    => 'PhD Student in Computer Science',
+        'hero_titre_ligne1' => 'Researcher in',
+        'hero_titre_em'     => 'Human–Computer Interaction',
         'hero_titre_ligne3' => '',
-        'hero_description'  => 'Je conçois des systèmes d\'acquisition de données physiologiques multi-capteurs pour comprendre comment les humains interagissent avec les technologies numériques.',
-        'hero_btn1_label'   => 'Mes recherches →',
+        'hero_description'  => 'I design multi-sensor physiological data acquisition systems to understand how humans interact with digital technologies.',
+        'hero_btn1_label'   => 'My Research →',
         'hero_btn1_url'     => '#research',
         'hero_btn2_label'   => 'Publications',
         'hero_btn2_url'     => '#publications',
-        'hero_stat1_num'    => '4+', 'hero_stat1_label' => 'Capteurs intégrés',
-        'hero_stat2_num'    => 'LSL', 'hero_stat2_label' => 'Synchronisation',
+        'hero_stat1_num'    => '4+', 'hero_stat1_label' => 'Integrated Sensors',
+        'hero_stat2_num'    => 'LSL', 'hero_stat2_label' => 'Synchronization',
         'hero_stat3_num'    => 'VR',  'hero_stat3_label' => 'Unity / XR',
         'hero_stat4_num'    => 'PhD', 'hero_stat4_label' => 'UQAC · LRIT',
-        'about_titre'       => 'Comprendre l\'humain par les données',
+        'about_titre'       => 'Understanding Humans Through Data',
         'about_texte'       => '',
         'info_institution'  => 'Université du Québec à Chicoutimi (UQAC)',
-        'info_labo'         => 'Labo. de Recherche sur les Interfaces & Technologies',
+        'info_labo'         => 'Interfaces & Technologies Research Lab',
         'info_directeur'    => 'Prof. Bob-Antoine Jerry Ménélas',
-        'info_localisation' => 'Québec, Canada',
-        'info_langues'      => 'Français · Anglais',
+        'info_localisation' => 'Quebec, Canada',
+        'info_langues'      => 'French · English',
         'contact_email'     => '',
         'contact_github'    => '',
         'contact_linkedin'  => '',
         'contact_institution_url' => 'https://uqac.ca',
         'partners_label'    => 'Collaborations',
-        'partners_titre'    => 'Entreprises & institutions partenaires',
-        'footer_texte'      => '© ' . date('Y') . ' Deladem — Chercheur en IHM',
-        'footer_mention'    => 'Construit avec passion · Québec, Canada',
+        'partners_titre'    => 'Partner Companies & Institutions',
+        'footer_texte'      => '© ' . date('Y') . ' Deladem — HCI Researcher',
+        'footer_mention'    => 'Built with passion · Quebec, Canada',
     ];
 
     function g( $key, $defaults ) {
@@ -965,7 +965,7 @@ function deladem_render_projet_tags( $post_id ) {
 
 /* Fallback menu */
 function deladem_fallback_menu() {
-    $items = [ '#about' => 'À propos', '#research' => 'Recherche', '#publications' => 'Publications', '#cv' => 'Parcours', '#contact' => 'Contact' ];
+    $items = [ '#about' => 'About', '#research' => 'Research', '#publications' => 'Publications', '#cv' => 'Background', '#contact' => 'Contact' ];
     echo '<ul id="primary-menu">';
     foreach ( $items as $url => $label ) echo '<li><a href="' . esc_attr($url) . '">' . esc_html($label) . '</a></li>';
     echo '</ul>';
@@ -976,7 +976,7 @@ add_action( 'admin_post_deladem_contact', 'deladem_handle_contact' );
 add_action( 'admin_post_nopriv_deladem_contact', 'deladem_handle_contact' );
 function deladem_handle_contact() {
     if ( ! wp_verify_nonce( $_POST['deladem_contact_nonce'] ?? '', 'deladem_contact' ) ) {
-        wp_die( 'Erreur de securite' );
+        wp_die( 'Security error' );
     }
     $to      = dlm_opt( 'contact_email' ) ?: get_option( 'admin_email' );
     $subject = '[Contact site] ' . sanitize_text_field( $_POST['contact_subject'] ?? '' );
