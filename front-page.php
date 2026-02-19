@@ -69,6 +69,7 @@
   <div class="section-wrap">
     <p class="section-label">About</p>
     <h2 class="section-title"><?php echo esc_html( dlm_opt('about_titre', 'Understanding Humans Through Data') ); ?></h2>
+    <p class="section-sub"><?php echo esc_html( dlm_opt('about_description', 'Background, research context and academic information.') ); ?></p>
 
     <div class="about-grid">
       <div class="about-text fade-up">
@@ -189,8 +190,9 @@
   <div class="partners-inner">
     <p class="section-label"><?php echo esc_html( dlm_opt('partners_label','Collaborations') ); ?></p>
     <h2 class="section-title"><?php echo esc_html( dlm_opt('partners_titre','Partner Companies & Institutions') ); ?></h2>
+    <p class="section-sub"><?php echo esc_html( dlm_opt('partners_description','Research partners and institutional collaborators.') ); ?></p>
 
-    <div class="partners-grid">
+    <div class="partners-grid fade-up">
       <?php while ( $partners_q->have_posts() ) : $partners_q->the_post();
         $url       = get_post_meta( get_the_ID(), '_partenaire_url',      true );
         $initiales = get_post_meta( get_the_ID(), '_partenaire_initiales', true );
@@ -217,16 +219,26 @@
 </section>
 <?php endif; ?>
 
-<div class="section-divider"></div>
-
 <!-- ══════ PROJECTS ══════ -->
 <section id="research">
   <div class="section-wrap">
     <p class="section-label">Research Areas</p>
-    <h2 class="section-title">Current Projects</h2>
-    <p class="section-sub">Multimodal systems, virtual reality and physiology for HCI.</p>
 
-    <?php $projets_q = deladem_get_projets(6); ?>
+    <?php
+    $projets_limit = 6;
+    $projets_q = deladem_get_projets( $projets_limit );
+    $projets_total = (int) wp_count_posts('projet')->publish;
+    ?>
+
+    <div class="section-header-row">
+      <h2 class="section-title">Current Projects</h2>
+      <?php if ( $projets_total > $projets_limit ) : ?>
+      <a href="<?php echo esc_url( get_post_type_archive_link('projet') ); ?>" class="section-view-all-link">
+        View all (<?php echo $projets_total; ?>) &rarr;
+      </a>
+      <?php endif; ?>
+    </div>
+    <p class="section-sub">Multimodal systems, virtual reality and physiology for HCI.</p>
 
     <?php if ( $projets_q->have_posts() ) : ?>
     <div class="research-grid">
@@ -245,8 +257,8 @@
       <?php $i++; endwhile; wp_reset_postdata(); ?>
     </div>
     <?php else : ?>
-    <div style="padding:3rem;text-align:center;border:2px dashed var(--border);border-radius:16px;color:var(--muted);">
-      <p style="margin-bottom:1rem;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></p>
+    <div class="archive-empty">
+      <p><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></p>
       <p><strong>No projects published yet.</strong></p>
       <p>Go to <strong>Dashboard → Projects → Add New</strong> to create your first research projects.</p>
     </div>
@@ -261,10 +273,22 @@
 <section id="publications">
   <div class="section-wrap">
     <p class="section-label">Publications</p>
-    <h2 class="section-title">Academic Works</h2>
-    <p class="section-sub">Articles, conferences and scientific contributions.</p>
 
-    <?php $pubs_q = deladem_get_publications(15); ?>
+    <?php
+    $pubs_limit = 6;
+    $pubs_q = deladem_get_publications( $pubs_limit );
+    $pubs_total = (int) wp_count_posts('publication')->publish;
+    ?>
+
+    <div class="section-header-row">
+      <h2 class="section-title">Academic Works</h2>
+      <?php if ( $pubs_total > $pubs_limit ) : ?>
+      <a href="<?php echo esc_url( get_post_type_archive_link('publication') ); ?>" class="section-view-all-link">
+        View all (<?php echo $pubs_total; ?>) &rarr;
+      </a>
+      <?php endif; ?>
+    </div>
+    <p class="section-sub">Articles, conferences and scientific contributions.</p>
 
     <?php if ( $pubs_q->have_posts() ) : ?>
     <div class="pub-list fade-up">
@@ -292,8 +316,8 @@
       <?php endwhile; wp_reset_postdata(); ?>
     </div>
     <?php else : ?>
-    <div style="padding:3rem;text-align:center;border:2px dashed var(--border);border-radius:16px;color:var(--muted);">
-      <p style="margin-bottom:1rem;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></p>
+    <div class="archive-empty">
+      <p><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></p>
       <p><strong>No publications yet.</strong></p>
       <p>Go to <strong>Dashboard → Publications → Add New</strong>.</p>
     </div>
@@ -301,8 +325,148 @@
   </div>
 </section>
 
-<div class="section-divider"></div>
 
+<!-- ══════ FINANCEMENTS ══════ -->
+<?php
+$fin_limit = 6;
+$fin_q = deladem_get_financements( 50 );
+// Filter: only show actif and termine on the front
+$fin_posts_all = [];
+if ( $fin_q->have_posts() ) {
+    while ( $fin_q->have_posts() ) {
+        $fin_q->the_post();
+        $f_statut = get_post_meta( get_the_ID(), '_financement_statut', true );
+        if ( in_array( $f_statut, [ 'actif', 'termine', '' ], true ) ) {
+            $fin_posts_all[] = get_the_ID();
+        }
+    }
+    wp_reset_postdata();
+}
+$fin_total = count( $fin_posts_all );
+$fin_posts = array_slice( $fin_posts_all, 0, $fin_limit );
+if ( ! empty( $fin_posts ) ) :
+$devise_symbols = [ 'CAD' => '$', 'USD' => '$', 'EUR' => '€', 'GBP' => '£', 'XOF' => 'FCFA', 'autre' => '' ];
+$modalite_labels = [
+    'ponctuel' => '', 'par_an' => '/ year', 'par_mois' => '/ month',
+    'par_session' => '/ session', 'par_semestre' => '/ semester',
+    'total' => 'total', 'renouvelable' => 'renewable',
+    'degressif' => 'decreasing', 'variable' => 'variable',
+    'en_nature' => 'in-kind', 'exoneration' => 'waiver', 'autre' => '',
+];
+$type_labels = [ 'bourse' => 'Scholarship', 'financement' => 'Funding', 'subvention' => 'Grant', 'contrat' => 'Contract', 'prix' => 'Award' ];
+$statut_labels = [ 'actif' => 'Active', 'termine' => 'Completed' ];
+$role_labels = [
+    'chercheur_principal' => 'Principal Investigator', 'co_chercheur' => 'Co-Investigator',
+    'collaborateur' => 'Collaborator', 'stagiaire' => 'Intern',
+    'postdoc' => 'Postdoctoral Researcher', 'assistant' => 'Research Assistant',
+    'coordonnateur' => 'Coordinator', 'responsable' => 'Scientific Director',
+    'membre' => 'Team Member', 'beneficiaire' => 'Beneficiary', 'autre' => 'Other',
+];
+?>
+<section id="financements">
+  <div class="section-wrap">
+    <p class="section-label"><?php echo esc_html( dlm_opt('financements_label', 'Funding') ); ?></p>
+    <div class="section-header-row">
+      <h2 class="section-title"><?php echo esc_html( dlm_opt('financements_titre', 'Research Funding & Awards') ); ?></h2>
+      <?php if ( $fin_total > $fin_limit ) : ?>
+      <a href="<?php echo esc_url( get_post_type_archive_link('financement') ); ?>" class="section-view-all-link">
+        View all (<?php echo $fin_total; ?>) &rarr;
+      </a>
+      <?php endif; ?>
+    </div>
+    <p class="section-sub"><?php echo esc_html( dlm_opt('financements_description', 'Scholarships, grants and institutional support.') ); ?></p>
+
+    <div class="financement-grid">
+      <?php foreach ( $fin_posts as $fin_pid ) :
+        $f_partenaire_id = get_post_meta( $fin_pid, '_financement_partenaire',   true );
+        $f_type          = get_post_meta( $fin_pid, '_financement_type',         true );
+        $f_montant       = get_post_meta( $fin_pid, '_financement_montant',      true );
+        $f_devise        = get_post_meta( $fin_pid, '_financement_devise',       true );
+        $f_modalite      = get_post_meta( $fin_pid, '_financement_modalite',     true );
+        $f_statut        = get_post_meta( $fin_pid, '_financement_statut',       true );
+        $f_role          = get_post_meta( $fin_pid, '_financement_role',          true );
+        $f_beneficiaire  = get_post_meta( $fin_pid, '_financement_beneficiaire', true );
+        $f_periode       = get_post_meta( $fin_pid, '_financement_periode',      true );
+        $f_description   = get_post_meta( $fin_pid, '_financement_description',  true );
+
+        $partenaire_name = '';
+        $partenaire_logo = '';
+        $partenaire_initiales = '';
+        if ( $f_partenaire_id ) {
+            $partenaire_name = get_the_title( $f_partenaire_id );
+            if ( has_post_thumbnail( $f_partenaire_id ) ) {
+                $partenaire_logo = get_the_post_thumbnail( $f_partenaire_id, 'partner-logo', [ 'class' => 'financement-partner-logo', 'alt' => esc_attr( $partenaire_name ), 'loading' => 'lazy' ] );
+            } else {
+                $partenaire_initiales = get_post_meta( $f_partenaire_id, '_partenaire_initiales', true ) ?: mb_substr( $partenaire_name, 0, 2 );
+            }
+        }
+
+        // Format montant display
+        $montant_display = '';
+        if ( $f_montant ) {
+            $sym = $devise_symbols[ $f_devise ] ?? '';
+            $mod = $modalite_labels[ $f_modalite ] ?? '';
+            $montant_display = $f_montant . ( $sym ? ' ' . $sym : '' ) . ( $mod ? ' ' . $mod : '' );
+        }
+      ?>
+      <a class="financement-card fade-up" href="<?php echo esc_url( get_permalink( $fin_pid ) ); ?>">
+        <div class="financement-header">
+          <span class="financement-type financement-type--<?php echo esc_attr( $f_type ); ?>"><?php echo esc_html( $type_labels[ $f_type ] ?? 'Funding' ); ?></span>
+          <div class="financement-header-right">
+            <?php if ( $f_statut && $f_statut !== 'actif' ) : ?>
+            <span class="financement-statut financement-statut--<?php echo esc_attr( $f_statut ); ?>"><?php echo esc_html( $statut_labels[ $f_statut ] ?? '' ); ?></span>
+            <?php endif; ?>
+            <?php if ( $f_periode ) : ?>
+            <span class="financement-periode"><?php echo esc_html( $f_periode ); ?></span>
+            <?php endif; ?>
+          </div>
+        </div>
+
+        <h3 class="financement-title"><?php echo esc_html( get_the_title( $fin_pid ) ); ?></h3>
+
+        <?php if ( $partenaire_name ) : ?>
+        <div class="financement-partner">
+          <?php if ( $partenaire_logo ) : ?>
+            <?php echo $partenaire_logo; ?>
+          <?php elseif ( $partenaire_initiales ) : ?>
+            <span class="financement-partner-initials"><?php echo esc_html( $partenaire_initiales ); ?></span>
+          <?php endif; ?>
+          <span class="financement-partner-name"><?php echo esc_html( $partenaire_name ); ?></span>
+        </div>
+        <?php endif; ?>
+
+        <div class="financement-details">
+          <?php if ( $montant_display ) : ?>
+          <div class="financement-detail">
+            <span class="financement-detail-label">Amount</span>
+            <span class="financement-detail-value"><?php echo esc_html( $montant_display ); ?></span>
+          </div>
+          <?php endif; ?>
+          <?php if ( $f_role && isset( $role_labels[ $f_role ] ) ) : ?>
+          <div class="financement-detail">
+            <span class="financement-detail-label">Role</span>
+            <span class="financement-detail-value"><?php echo esc_html( $role_labels[ $f_role ] ); ?></span>
+          </div>
+          <?php endif; ?>
+          <?php if ( $f_beneficiaire ) : ?>
+          <div class="financement-detail">
+            <span class="financement-detail-label">Beneficiary</span>
+            <span class="financement-detail-value"><?php echo esc_html( $f_beneficiaire ); ?></span>
+          </div>
+          <?php endif; ?>
+        </div>
+
+        <?php if ( $f_description ) : ?>
+        <p class="financement-desc"><?php echo esc_html( $f_description ); ?></p>
+        <?php endif; ?>
+      </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<div class="section-divider"></div>
 
 <!-- ══════ CV / BACKGROUND ══════ -->
 <section id="cv">
@@ -347,7 +511,7 @@
         <?php
         $competences_q = deladem_get_cv('competence');
         if ( $competences_q->have_posts() ) : ?>
-        <h3 class="cv-section-title" style="margin-top:2rem;">Skills</h3>
+        <h3 class="cv-section-title cv-section-title--skills">Skills</h3>
         <div class="skills-grid">
           <?php while ($competences_q->have_posts()) : $competences_q->the_post(); ?>
           <span class="skill-chip"><?php the_title(); ?></span>

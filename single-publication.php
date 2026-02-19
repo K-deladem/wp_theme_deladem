@@ -6,12 +6,12 @@
     $revue   = get_post_meta( get_the_ID(), '_pub_revue', true );
     $type    = get_post_meta( get_the_ID(), '_pub_type', true );
     $doi     = get_post_meta( get_the_ID(), '_pub_doi', true );
-    $labels  = [ 'conference' => 'Conférence', 'journal' => 'Revue', 'poster' => 'Poster', 'rapport' => 'Rapport', 'these' => 'Thèse', 'workshop' => 'Workshop' ];
+    $labels  = [ 'conference' => 'Conference', 'journal' => 'Journal', 'poster' => 'Poster', 'rapport' => 'Report', 'these' => 'Thesis', 'workshop' => 'Workshop' ];
 ?>
 
-<article class="single-publication">
+<section class="single-publication-hero">
     <div class="section-wrap">
-        <a href="<?php echo esc_url( home_url( '/#publications' ) ); ?>" class="back-link">&larr; Retour aux publications</a>
+        <a href="<?php echo esc_url( home_url( '/#publications' ) ); ?>" class="back-link">&larr; Back to publications</a>
 
         <div class="pub-single-header">
             <?php if ( $type ) : ?>
@@ -37,17 +37,21 @@
 
         <?php if ( $doi ) : ?>
         <a href="<?php echo esc_url( $doi ); ?>" class="btn-primary" target="_blank" rel="noopener noreferrer" style="margin-top:1.5rem;">
-            Voir la publication &rarr;
+            View publication &rarr;
         </a>
         <?php endif; ?>
+    </div>
+</section>
 
-        <?php if ( get_the_content() ) : ?>
-        <div class="pub-body-single" style="margin-top:3rem;">
+<?php if ( get_the_content() ) : ?>
+<article class="single-publication-content">
+    <div class="section-wrap">
+        <div class="pub-body-single">
             <?php the_content(); ?>
         </div>
-        <?php endif; ?>
     </div>
 </article>
+<?php endif; ?>
 
 <?php endwhile; ?>
 
