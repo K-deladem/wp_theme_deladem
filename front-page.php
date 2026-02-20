@@ -187,7 +187,7 @@
 <!-- ══════ PARTNERS / LOGOS ══════ -->
 <?php $partners_q = deladem_get_partenaires(20); if ( $partners_q->have_posts() ) : ?>
 <section id="partners">
-  <div class="partners-inner">
+  <div class="section-wrap">
     <p class="section-label"><?php echo esc_html( dlm_opt('partners_label','Collaborations') ); ?></p>
     <h2 class="section-title"><?php echo esc_html( dlm_opt('partners_titre','Partner Companies & Institutions') ); ?></h2>
     <p class="section-sub"><?php echo esc_html( dlm_opt('partners_description','Research partners and institutional collaborators.') ); ?></p>
@@ -325,6 +325,8 @@
   </div>
 </section>
 
+
+<div class="section-divider"></div>
 
 <!-- ══════ FINANCEMENTS ══════ -->
 <?php
@@ -555,12 +557,14 @@ $role_labels = [
 
 <!-- ══════ CONTACT ══════ -->
 <section id="contact" class="contact-section">
-  <div class="contact-inner">
-    <div>
-      <p class="section-label">Contact</p>
-      <h2 class="section-title">Let's Work Together</h2>
-      <p class="section-sub">Research collaborations, teaching or IT consulting.</p>
+  <div class="contact-header">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">Let's Work Together</h2>
+    <p class="section-sub">Research collaborations, teaching or IT consulting.</p>
+  </div>
 
+  <div class="contact-inner">
+    <div class="contact-col-links">
       <div class="contact-links">
         <?php $em = dlm_opt('contact_email'); if ( $em ) : ?>
         <a class="contact-link" href="mailto:<?php echo esc_attr($em); ?>">
@@ -597,8 +601,7 @@ $role_labels = [
       </div>
     </div>
 
-    <!-- Form -->
-    <div>
+    <div class="contact-col-form">
       <?php if ( shortcode_exists('contact-form-7') ) :
         echo do_shortcode('[contact-form-7 id="1" title="Contact"]');
       else : ?>
