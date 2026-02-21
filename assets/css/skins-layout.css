@@ -3,9 +3,543 @@
    Body classes: .layout_{section}-{variant}
    ============================================================ */
 
-/* ── PROJECTS ── */
 
-/* Projects: list — single column, tighter spacing */
+/* ══════════════════════════════════════════════════════════════
+   HERO VARIANTS
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── HERO: Split (default) ───────────────────────────────────
+   Grille 50/50 classique. Plein écran.
+   ──────────────────────────────────────────────────────────── */
+
+body:not(.layout_hero-centered):not(.layout_hero-editorial):not(.layout_hero-bold):not(.layout_hero-classic) #hero {
+  min-height: calc(100vh - 5rem);
+}
+
+@media (max-width: 1024px) {
+  body:not(.layout_hero-centered):not(.layout_hero-editorial):not(.layout_hero-bold):not(.layout_hero-classic) #hero {
+    min-height: calc(80vh - 5rem);
+  }
+}
+@media (max-width: 768px) {
+  body:not(.layout_hero-centered):not(.layout_hero-editorial):not(.layout_hero-bold):not(.layout_hero-classic) #hero {
+    min-height: auto;
+  }
+}
+
+
+/* ── HERO: Centered ──────────────────────────────────────────
+   Texte centré pleine largeur au milieu de l'écran.
+   Stats 4 colonnes + badges marquee collés en bas.
+   ──────────────────────────────────────────────────────────── */
+
+.layout_hero-centered #hero {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  min-height: calc(100vh - 5rem);
+}
+
+/* Texte : centré, occupe tout l'espace vertical restant */
+.layout_hero-centered .hero-left {
+  text-align: center;
+  align-items: stretch;
+  padding: 6rem 4rem 3rem;
+  min-width: 0;
+}
+.layout_hero-centered .hero-tag {
+  justify-content: center;
+}
+.layout_hero-centered .hero-title {
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.layout_hero-centered .hero-desc {
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.layout_hero-centered .hero-actions {
+  justify-content: center;
+}
+
+/* Zone droite : flux normal, pleine largeur, pas de fond sombre */
+.layout_hero-centered .hero-right {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: auto;
+  overflow: visible;
+  background: transparent;
+  min-width: 0;
+}
+.layout_hero-centered .hero-bg-pattern,
+.layout_hero-centered .hero-grid {
+  display: none;
+}
+
+/* Stats : fond clair, 4 colonnes, proportionnées */
+.layout_hero-centered .hero-right-inner {
+  position: relative;
+  inset: auto;
+  display: block;
+  padding: 1.5rem 4rem;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  order: 1;
+}
+.layout_hero-centered .hero-stat-block {
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 750px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  gap: 0;
+}
+.layout_hero-centered .hero-stat {
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  border-color: var(--border);
+  background: transparent;
+}
+.layout_hero-centered .hero-stat .num {
+  color: var(--ink);
+  font-size: 2rem;
+}
+.layout_hero-centered .hero-stat .label {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* Badges : bande marquee défilante collée en bas */
+.layout_hero-centered .sensor-badges {
+  position: relative;
+  inset: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  background: #1A1714;
+  padding: 1.1rem 0;
+  pointer-events: auto;
+  order: 2;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+}
+html[data-theme="dark"] .layout_hero-centered .sensor-badges {
+  background: #0D0B09;
+}
+.layout_hero-centered .sensor-badge {
+  position: relative;
+  top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+  flex-shrink: 0;
+  animation: none !important;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  padding: 0.45rem 1rem;
+  max-width: none;
+  transform: none;
+}
+.layout_hero-centered .sensor-badge:hover {
+  transform: none;
+}
+.layout_hero-centered .sensor-badges-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1.5rem;
+  padding-right: 1.5rem;
+  animation: marquee-scroll var(--marquee-duration, 20s) linear infinite;
+  will-change: transform;
+}
+.layout_hero-centered .sensor-badges:hover .sensor-badges-track {
+  animation-play-state: paused;
+}
+
+
+/* ── HERO: Classic ──────────────────────────────────────────
+   2 colonnes comme split mais fond transparent.
+   Texte gauche centré verticalement.
+   Stats droite centrées verticalement (grille 2×2).
+   Badges marquee pleine largeur en bas.
+   ──────────────────────────────────────────────────────────── */
+
+.layout_hero-classic #hero {
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - 5rem);
+  position: relative;
+  padding-bottom: 3.5rem;
+}
+
+/* Texte gauche */
+.layout_hero-classic .hero-left {
+  padding: 6rem 3rem 3rem;
+  grid-column: 1;
+  grid-row: 1;
+  justify-content: center;
+}
+.layout_hero-classic .hero-title {
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+}
+.layout_hero-classic .hero-desc {
+  max-width: 520px;
+  font-size: 1.05rem;
+}
+
+/* Stats droite — fond transparent, centrées.
+   position: static pour que sensor-badges (absolute) se positionne sur #hero */
+.layout_hero-classic .hero-right {
+  background: transparent;
+  overflow: visible;
+  position: static;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: auto;
+  grid-column: 2;
+  grid-row: 1;
+  padding: 6rem 3rem 3rem;
+}
+.layout_hero-classic .hero-bg-pattern,
+.layout_hero-classic .hero-grid {
+  display: none;
+}
+
+/* Stats : grille 2×2 proportionnée */
+.layout_hero-classic .hero-right-inner {
+  position: relative;
+  inset: auto;
+  display: block;
+  padding: 0;
+  background: transparent;
+  width: 100%;
+  max-width: 420px;
+}
+.layout_hero-classic .hero-stat-block {
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  gap: 0;
+  background: var(--card);
+}
+.layout_hero-classic .hero-stat {
+  padding: 2.25rem 2rem;
+  text-align: center;
+  border-color: var(--border);
+  background: transparent;
+}
+.layout_hero-classic .hero-stat .num {
+  color: var(--ink);
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+.layout_hero-classic .hero-stat .label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-top: 0.35rem;
+}
+
+/* Badges marquee : bande pleine largeur en bas du hero */
+.layout_hero-classic .sensor-badges {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  background: #1A1714;
+  padding: 1.1rem 0;
+  pointer-events: auto;
+  z-index: 4;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+}
+html[data-theme="dark"] .layout_hero-classic .sensor-badges {
+  background: #0D0B09;
+}
+.layout_hero-classic .sensor-badge {
+  position: relative;
+  top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+  flex-shrink: 0;
+  animation: none !important;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  padding: 0.45rem 1rem;
+  max-width: none;
+  transform: none;
+}
+.layout_hero-classic .sensor-badge:hover {
+  transform: none;
+}
+.layout_hero-classic .sensor-badges-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1.5rem;
+  padding-right: 1.5rem;
+  animation: marquee-scroll var(--marquee-duration, 20s) linear infinite;
+  will-change: transform;
+}
+.layout_hero-classic .sensor-badges:hover .sensor-badges-track {
+  animation-play-state: paused;
+}
+
+
+/* ── HERO: Editorial ─────────────────────────────────────────
+   Look magazine. Texte pleine largeur centré verticalement.
+   Badges en bande défilante marquee.
+   Stats en ligne sur fond clair.
+   ──────────────────────────────────────────────────────────── */
+
+.layout_hero-editorial #hero {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  min-height: calc(100vh - 5rem);
+}
+
+/* Texte : occupe tout l'espace vertical, centré */
+.layout_hero-editorial .hero-left {
+  padding: 6rem 4rem 3rem;
+  max-width: 100%;
+}
+.layout_hero-editorial .hero-title {
+  font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+}
+.layout_hero-editorial .hero-desc {
+  max-width: 560px;
+  font-size: 1.05rem;
+}
+
+/* Zone droite : transparente, flux normal, flex column pour ordonner badges/stats */
+.layout_hero-editorial .hero-right {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  overflow: visible;
+  position: relative;
+  min-height: auto;
+}
+.layout_hero-editorial .hero-bg-pattern,
+.layout_hero-editorial .hero-grid {
+  display: none;
+}
+
+/* Badges → bande défilante marquee */
+.layout_hero-editorial .sensor-badges {
+  position: relative;
+  inset: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  background: #1A1714;
+  padding: 1.1rem 0;
+  pointer-events: auto;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+}
+html[data-theme="dark"] .layout_hero-editorial .sensor-badges {
+  background: #0D0B09;
+}
+.layout_hero-editorial .sensor-badge {
+  position: relative;
+  top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+  flex-shrink: 0;
+  animation: none !important;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  padding: 0.45rem 1rem;
+  max-width: none;
+  transform: none;
+}
+.layout_hero-editorial .sensor-badge:hover {
+  transform: none;
+}
+.layout_hero-editorial .sensor-badges-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1.5rem;
+  padding-right: 1.5rem;
+  animation: marquee-scroll var(--marquee-duration, 20s) linear infinite;
+  will-change: transform;
+}
+.layout_hero-editorial .sensor-badges:hover .sensor-badges-track {
+  animation-play-state: paused;
+}
+
+/* Stats : fond clair, proportionnées */
+.layout_hero-editorial .hero-right-inner {
+  position: relative;
+  inset: auto;
+  display: block;
+  padding: 1.5rem 4rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+.layout_hero-editorial .hero-stat-block {
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  max-width: 750px;
+  gap: 0;
+}
+.layout_hero-editorial .hero-stat {
+  border-color: var(--border);
+  background: transparent;
+  padding: 1.5rem 1.25rem;
+}
+.layout_hero-editorial .hero-stat .num {
+  color: var(--ink);
+  font-size: 2rem;
+}
+.layout_hero-editorial .hero-stat .label {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+
+/* ── HERO: Bold ──────────────────────────────────────────────
+   Immersif 100vh. Fond sombre plein écran.
+   Texte blanc centré au milieu.
+   Badges sur les côtés gauche/droite.
+   Stats en bande en bas avec backdrop-blur.
+   ──────────────────────────────────────────────────────────── */
+
+.layout_hero-bold #hero {
+  grid-template-columns: 1fr;
+  min-height: calc(100vh - 5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fond sombre couvre tout */
+.layout_hero-bold .hero-right {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Texte centré au milieu */
+.layout_hero-bold .hero-left {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 4rem 8rem;
+  max-width: 750px;
+  margin: 0 auto;
+}
+.layout_hero-bold .hero-tag {
+  justify-content: center;
+  color: rgba(255,255,255,0.5);
+}
+.layout_hero-bold .hero-tag::before {
+  background: rgba(255,255,255,0.3);
+}
+.layout_hero-bold .hero-title {
+  color: var(--white);
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+}
+.layout_hero-bold .hero-title em {
+  color: var(--accent);
+}
+.layout_hero-bold .hero-desc {
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.1rem;
+}
+.layout_hero-bold .hero-actions {
+  justify-content: center;
+}
+.layout_hero-bold .btn-primary {
+  background: var(--white);
+  color: var(--ink);
+}
+.layout_hero-bold .btn-primary:hover {
+  background: var(--accent);
+  color: var(--white);
+}
+.layout_hero-bold .btn-secondary {
+  border-color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.85);
+}
+.layout_hero-bold .btn-secondary:hover {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+/* Badges : bords gauche/droite */
+.layout_hero-bold .sensor-badges {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.layout_hero-bold .sensor-badge:nth-child(1)  { top: 10%; left: 3%; }
+.layout_hero-bold .sensor-badge:nth-child(2)  { top: 15%; right: 4%; left: auto; }
+.layout_hero-bold .sensor-badge:nth-child(3)  { top: 30%; left: 2%; }
+.layout_hero-bold .sensor-badge:nth-child(4)  { top: 35%; right: 3%; left: auto; }
+.layout_hero-bold .sensor-badge:nth-child(5)  { top: 50%; left: 3%; }
+.layout_hero-bold .sensor-badge:nth-child(6)  { top: 55%; right: 2%; left: auto; }
+.layout_hero-bold .sensor-badge:nth-child(7)  { top: 70%; left: 4%; }
+.layout_hero-bold .sensor-badge:nth-child(8)  { top: 72%; right: 5%; left: auto; }
+.layout_hero-bold .sensor-badge:nth-child(n+9) { display: none; }
+
+/* Stats : bande en bas avec blur */
+.layout_hero-bold .hero-right-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: auto;
+  z-index: 3;
+  display: block;
+  padding: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.layout_hero-bold .hero-stat-block {
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  border-radius: 0;
+  gap: 0;
+}
+.layout_hero-bold .hero-stat {
+  text-align: center;
+  padding: 1.75rem 1.25rem;
+  border-color: rgba(255,255,255,0.06);
+  background: transparent;
+}
+.layout_hero-bold .hero-stat .num {
+  font-size: 2rem;
+}
+.layout_hero-bold .hero-stat .label {
+  font-size: 0.78rem;
+}
+
+
+/* ── Shared marquee keyframe for all variants ── */
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PROJECTS VARIANTS
+   ══════════════════════════════════════════════════════════════ */
+
+/* Projects: list */
 .layout_projects-list .research-grid {
   grid-template-columns: 1fr;
   gap: 1rem;
@@ -21,15 +555,17 @@
   align-self: center;
 }
 
-/* Projects: two-col — fixed two columns */
+/* Projects: two-col */
 .layout_projects-two-col .research-grid {
   grid-template-columns: repeat(2, 1fr);
 }
 
 
-/* ── PUBLICATIONS ── */
+/* ══════════════════════════════════════════════════════════════
+   PUBLICATIONS VARIANTS
+   ══════════════════════════════════════════════════════════════ */
 
-/* Publications: card-grid — cards in a grid */
+/* Publications: card-grid */
 .layout_publications-card-grid .pub-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -46,7 +582,6 @@
   background: var(--card);
   border-bottom: 1px solid var(--border);
 }
-/* Override the default list hover (margin expand) with a card-style hover */
 .layout_publications-card-grid .pub-item:hover {
   margin: 0;
   padding: 1.5rem;
@@ -59,7 +594,7 @@
 .layout_publications-card-grid .pub-year { font-size: 0.75rem; }
 .layout_publications-card-grid .pub-type { align-self: flex-start; }
 
-/* Publications: compact — denser, no type badge */
+/* Publications: compact */
 .layout_publications-compact .pub-list {
   border-top: 1px solid var(--border);
 }
@@ -76,36 +611,480 @@
 .layout_publications-compact .pub-type { display: none; }
 
 
-/* ── CV ── */
+/* ══════════════════════════════════════════════════════════════
+   CV VARIANTS
+   ══════════════════════════════════════════════════════════════ */
 
-/* CV: single column (timeline style) */
 .layout_cv-single .cv-cols {
   grid-template-columns: 1fr;
   gap: 2.5rem;
 }
 
 
-/* ── CONTACT ── */
+/* ══════════════════════════════════════════════════════════════
+   CONTACT VARIANTS
+   ══════════════════════════════════════════════════════════════ */
 
-/* Contact: stacked — single column */
 .layout_contact-stacked .contact-inner {
   grid-template-columns: 1fr;
   gap: 2.5rem;
 }
 
 
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .layout_projects-two-col .research-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 768px) {
-  .layout_publications-card-grid .pub-list { grid-template-columns: 1fr; }
-  .layout_projects-list .research-card {
-    display: block;
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (769-1024px) ── */
+@media (max-width: 1024px) {
+  /* All heroes: reduce height on tablet */
+  .layout_hero-centered #hero,
+  .layout_hero-editorial #hero,
+  .layout_hero-classic #hero,
+  .layout_hero-bold #hero {
+    min-height: calc(80vh - 5rem);
+  }
+
+  /* Bold tablet */
+  .layout_hero-bold .hero-left {
+    padding: 7rem 3rem 6rem;
+  }
+  .layout_hero-bold .sensor-badge {
+    font-size: 0.55rem;
+    padding: 0.22rem 0.5rem;
+  }
+  .layout_hero-bold .sensor-badge:nth-child(n+7) {
+    display: none;
+  }
+
+  /* Centered tablet */
+  .layout_hero-centered .hero-left {
+    padding: 5rem 2.5rem 2rem;
+  }
+  .layout_hero-centered .hero-right-inner {
+    padding: 1.25rem 2rem;
+  }
+
+  /* Editorial tablet */
+  .layout_hero-editorial .hero-left {
+    padding: 5rem 2.5rem 2rem;
+  }
+  .layout_hero-editorial .hero-right-inner {
+    padding: 1.25rem 2rem;
+  }
+
+  /* Classic tablet: single column */
+  .layout_hero-classic #hero {
+    grid-template-columns: 1fr;
+    padding-bottom: 3.5rem;
+  }
+  .layout_hero-classic .hero-left {
+    padding: 5rem 2.5rem 2rem;
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .layout_hero-classic .hero-right {
+    padding: 0 2.5rem 1rem;
+    grid-column: 1;
+    grid-row: auto;
+    position: static;
+  }
+  .layout_hero-classic .hero-right-inner {
+    max-width: 100%;
+  }
+  .layout_hero-classic .hero-stat-block {
+    max-width: 100%;
+    grid-template-columns: 1fr 1fr;
+  }
+  .layout_hero-classic .hero-stat {
+    padding: 1.5rem 1rem;
+  }
+  .layout_hero-classic .hero-stat .num {
+    font-size: 1.8rem;
+  }
+
+  /* Marquee variants: show all badges */
+  .layout_hero-centered .sensor-badge:nth-child(n+9),
+  .layout_hero-editorial .sensor-badge:nth-child(n+9),
+  .layout_hero-classic .sensor-badge:nth-child(n+9) {
+    display: inline-flex;
   }
 }
 
-/* ── TOUCH DEVICES — Disable hover transforms ── */
+@media (max-width: 900px) {
+  .layout_projects-two-col .research-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  .layout_publications-card-grid .pub-list { grid-template-columns: 1fr; }
+  .layout_projects-list .research-card { display: block; }
+
+  /* ── Global mobile overflow fix for ALL hero variants ── */
+  .layout_hero-centered #hero,
+  .layout_hero-editorial #hero,
+  .layout_hero-classic #hero,
+  .layout_hero-bold #hero {
+    min-height: auto;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .layout_hero-centered .hero-left,
+  .layout_hero-editorial .hero-left,
+  .layout_hero-classic .hero-left,
+  .layout_hero-bold .hero-left {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .layout_hero-centered .hero-right,
+  .layout_hero-editorial .hero-right,
+  .layout_hero-classic .hero-right,
+  .layout_hero-bold .hero-right {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .layout_hero-centered .hero-right-inner,
+  .layout_hero-editorial .hero-right-inner,
+  .layout_hero-classic .hero-right-inner,
+  .layout_hero-bold .hero-right-inner {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .layout_hero-centered .hero-stat-block,
+  .layout_hero-editorial .hero-stat-block,
+  .layout_hero-classic .hero-stat-block,
+  .layout_hero-bold .hero-stat-block {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .layout_hero-centered .sensor-badges,
+  .layout_hero-editorial .sensor-badges,
+  .layout_hero-classic .sensor-badges {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* ── Centered mobile ── */
+  .layout_hero-centered .hero-left {
+    padding: 7rem 1.25rem 2rem;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .layout_hero-centered .hero-tag {
+    justify-content: flex-start;
+  }
+  .layout_hero-centered .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  .layout_hero-centered .hero-desc {
+    font-size: 0.95rem;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 2rem;
+    line-height: 1.65;
+  }
+  .layout_hero-centered .hero-actions {
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .layout_hero-centered .btn-primary,
+  .layout_hero-centered .btn-secondary {
+    width: auto;
+    padding: 0.75rem 1.5rem;
+  }
+  .layout_hero-centered .hero-right {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .layout_hero-centered .sensor-badges {
+    padding: 0.65rem 0;
+  }
+  .layout_hero-centered .sensor-badges-track {
+    animation-name: marquee;
+  }
+  .layout_hero-centered .hero-right-inner {
+    padding: 0.75rem 1.25rem;
+    border-top: none;
+  }
+  .layout_hero-centered .hero-stat-block {
+    grid-template-columns: 1fr 1fr;
+  }
+  .layout_hero-centered .hero-stat {
+    padding: 1rem 0.75rem;
+  }
+  .layout_hero-centered .hero-stat .num {
+    color: var(--ink);
+    font-size: 1.5rem;
+  }
+  .layout_hero-centered .hero-stat .label {
+    color: var(--muted);
+    font-size: 0.68rem;
+  }
+
+  /* ── Editorial mobile ── */
+  .layout_hero-editorial .hero-left {
+    padding: 7rem 1.25rem 2rem;
+    max-width: 100%;
+  }
+  .layout_hero-editorial .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  .layout_hero-editorial .hero-desc {
+    font-size: 0.95rem;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    line-height: 1.65;
+  }
+  .layout_hero-editorial .hero-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .layout_hero-editorial .btn-primary,
+  .layout_hero-editorial .btn-secondary {
+    width: auto;
+    padding: 0.75rem 1.5rem;
+  }
+  .layout_hero-editorial .sensor-badges-track {
+    animation-name: marquee;
+  }
+  .layout_hero-editorial .sensor-badge {
+    position: relative;
+    top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+  }
+  .layout_hero-editorial .sensor-badges {
+    padding: 0.65rem 0;
+  }
+  .layout_hero-editorial .hero-right-inner {
+    padding: 0.75rem 1.25rem;
+    border-bottom: none;
+  }
+  .layout_hero-editorial .hero-stat-block {
+    grid-template-columns: 1fr 1fr;
+  }
+  .layout_hero-editorial .hero-stat {
+    padding: 1rem 0.75rem;
+  }
+  .layout_hero-editorial .hero-stat .num {
+    color: var(--ink);
+    font-size: 1.5rem;
+  }
+  .layout_hero-editorial .hero-stat .label {
+    color: var(--muted);
+    font-size: 0.68rem;
+  }
+
+  /* ── Classic mobile ── */
+  .layout_hero-classic #hero {
+    grid-template-columns: 1fr;
+    position: static;
+    padding-bottom: 0;
+  }
+  .layout_hero-classic .hero-left {
+    padding: 7rem 1.25rem 2rem;
+  }
+  .layout_hero-classic .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  .layout_hero-classic .hero-desc {
+    font-size: 0.95rem;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    line-height: 1.65;
+  }
+  .layout_hero-classic .hero-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .layout_hero-classic .btn-primary,
+  .layout_hero-classic .btn-secondary {
+    width: auto;
+    padding: 0.75rem 1.5rem;
+  }
+  .layout_hero-classic .hero-right {
+    position: relative;
+    padding: 0;
+  }
+  .layout_hero-classic .hero-right-inner {
+    position: relative;
+    inset: auto;
+    padding: 0.75rem 1.25rem;
+  }
+  .layout_hero-classic .sensor-badges {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    padding: 0.65rem 0;
+  }
+  .layout_hero-classic .sensor-badges-track {
+    animation-name: marquee;
+  }
+  .layout_hero-classic .hero-stat-block {
+    grid-template-columns: 1fr 1fr;
+    background: var(--card);
+  }
+  .layout_hero-classic .hero-stat {
+    padding: 1rem 0.75rem;
+    background: transparent;
+  }
+  .layout_hero-classic .hero-stat .num {
+    color: var(--ink);
+    font-size: 1.5rem;
+  }
+  .layout_hero-classic .hero-stat .label {
+    color: var(--muted);
+    font-size: 0.68rem;
+  }
+
+  /* ── Marquee badges mobile sizing ── */
+  .layout_hero-centered .sensor-badge,
+  .layout_hero-editorial .sensor-badge,
+  .layout_hero-classic .sensor-badge {
+    font-size: 0.68rem;
+    padding: 0.4rem 0.85rem;
+  }
+
+  /* ── Bold mobile ── */
+  .layout_hero-bold #hero {
+    position: static;
+  }
+  .layout_hero-bold .hero-right {
+    position: relative;
+    inset: auto;
+  }
+  .layout_hero-bold .hero-left {
+    padding: 7rem 1.25rem 2.5rem;
+    margin: 0;
+    text-align: left;
+    align-items: flex-start;
+    z-index: auto;
+    background: #1A1714;
+  }
+  .layout_hero-bold .hero-tag {
+    justify-content: flex-start;
+  }
+  .layout_hero-bold .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  .layout_hero-bold .hero-desc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+  .layout_hero-bold .hero-actions {
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .layout_hero-bold .btn-primary,
+  .layout_hero-bold .btn-secondary {
+    width: auto;
+    padding: 0.75rem 1.5rem;
+  }
+  .layout_hero-bold .btn-secondary {
+    border-color: rgba(255,255,255,0.3);
+    color: var(--white);
+  }
+  .layout_hero-bold .sensor-badges {
+    display: none;
+  }
+  .layout_hero-bold .hero-right-inner {
+    position: relative;
+    inset: auto;
+    z-index: auto;
+    display: block;
+    padding: 0.75rem 1.25rem;
+    background: rgba(0,0,0,0.6);
+    border-top: none;
+  }
+  .layout_hero-bold .hero-stat-block {
+    grid-template-columns: 1fr 1fr;
+    border-radius: var(--radius-md);
+  }
+  .layout_hero-bold .hero-stat {
+    padding: 1rem 0.75rem;
+  }
+  .layout_hero-bold .hero-stat .num {
+    font-size: 1.5rem;
+  }
+  .layout_hero-bold .hero-stat .label {
+    font-size: 0.68rem;
+  }
+}
+
+/* ── Small screens (≤480px) ── */
+@media (max-width: 480px) {
+  .layout_hero-centered .hero-stat .num,
+  .layout_hero-editorial .hero-stat .num,
+  .layout_hero-bold .hero-stat .num,
+  .layout_hero-classic .hero-stat .num {
+    font-size: 1.3rem;
+  }
+  .layout_hero-centered .hero-stat .label,
+  .layout_hero-editorial .hero-stat .label,
+  .layout_hero-bold .hero-stat .label,
+  .layout_hero-classic .hero-stat .label {
+    font-size: 0.6rem;
+  }
+  .layout_hero-centered .hero-stat,
+  .layout_hero-editorial .hero-stat,
+  .layout_hero-bold .hero-stat,
+  .layout_hero-classic .hero-stat {
+    padding: 0.85rem 0.5rem;
+  }
+  .layout_hero-centered .sensor-badge,
+  .layout_hero-editorial .sensor-badge,
+  .layout_hero-classic .sensor-badge {
+    font-size: 0.55rem;
+    padding: 0.3rem 0.6rem;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   DARK MODE FIXES (hero variants)
+   ══════════════════════════════════════════════════════════════ */
+
+html[data-theme="dark"] .layout_hero-bold .btn-primary {
+  color: var(--bg);
+}
+html[data-theme="dark"] .layout_hero-bold .btn-primary:hover {
+  color: var(--white);
+}
+html[data-theme="dark"] .layout_hero-bold .hero-right {
+  background: #0D0B09;
+}
+@media (max-width: 768px) {
+  html[data-theme="dark"] .layout_hero-bold .hero-left {
+    background: #0D0B09;
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   TOUCH DEVICES
+   ══════════════════════════════════════════════════════════════ */
+
 @media (hover: none) {
   .layout_publications-card-grid .pub-item:hover {
     transform: none;

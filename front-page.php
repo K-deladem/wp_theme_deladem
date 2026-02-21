@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <!-- ══════ HERO ══════ -->
-<section id="hero">
+<section id="hero" data-mouse-effect="<?php echo esc_attr( get_option( 'dlm_hero_mouse_effect', 'parallax' ) ); ?>">
   <div class="hero-left">
     <p class="hero-tag"><?php echo esc_html( dlm_opt('hero_etiquette', 'PhD Student in Computer Science') ); ?></p>
 

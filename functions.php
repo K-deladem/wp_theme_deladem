@@ -204,6 +204,7 @@ add_action( 'wp_head', function() {
 // Layout body classes
 add_filter( 'body_class', function( $classes ) {
     $layouts = [
+        'layout_hero'         => 'split',
         'layout_projects'     => 'grid',
         'layout_publications' => 'list',
         'layout_cv'           => 'two-col',
@@ -1400,6 +1401,17 @@ function deladem_customizer_register( $wp_customize ) {
     ] );
 
     $layout_options = [
+        'layout_hero' => [
+            'label'   => 'Hero (banner)',
+            'default' => 'split',
+            'choices' => [
+                'split'     => 'Split (default)',
+                'centered'  => 'Centered',
+                'editorial' => 'Editorial',
+                'bold'      => 'Bold (immersive)',
+                'classic'   => 'Classic (stats aside)',
+            ],
+        ],
         'layout_projects' => [
             'label'   => 'Projects',
             'default' => 'grid',
@@ -1436,6 +1448,27 @@ function deladem_customizer_register( $wp_customize ) {
             'choices' => $cfg['choices'],
         ] );
     }
+
+    // Mouse effect option (in layouts section)
+    $wp_customize->add_setting( 'dlm_hero_mouse_effect', [
+        'type'              => 'option',
+        'default'           => 'parallax',
+        'sanitize_callback' => function( $val ) {
+            return in_array( $val, [ 'parallax', 'magnetic', 'glow', 'none' ], true ) ? $val : 'parallax';
+        },
+    ] );
+    $wp_customize->add_control( 'dlm_hero_mouse_effect', [
+        'label'       => 'Badge mouse effect',
+        'section'     => 'deladem_layouts',
+        'type'        => 'select',
+        'choices'     => [
+            'parallax' => 'Parallax (default)',
+            'magnetic' => 'Magnetic',
+            'glow'     => 'Glow follow',
+            'none'     => 'None',
+        ],
+        'description' => 'Interactive effect on hero badges when hovering.',
+    ] );
 
     // Section Hero
     $wp_customize->add_section( 'deladem_hero', [
