@@ -25,7 +25,11 @@
   --radius-pill: 100px;
 }
 
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
 
 body {
   background: var(--bg);
@@ -34,7 +38,9 @@ body {
   font-weight: 400;
   line-height: 1.65;
   overflow-x: hidden;
+  width: 100%;
   min-width: 0;
+  position: relative;
 }
 
 body::before {
@@ -99,7 +105,7 @@ a { color: inherit; transition: color 0.2s; }
 .main-navigation--mobile { display: none; }
 
 /* ── SECTIONS BASE ── */
-.site-main { padding-top: 5rem; }
+.site-main { padding-top: 5rem; overflow-x: hidden; }
 
 .section-wrap { padding: 6rem 3rem; max-width: 1100px; margin: 0 auto; overflow-wrap: break-word; }
 
@@ -923,6 +929,8 @@ a { color: inherit; transition: color 0.2s; }
   background: #111;
   padding: 2.5rem 3rem;
   border-top: 1px solid rgba(255,255,255,0.06);
+  overflow-x: hidden;
+  max-width: 100%;
 }
 .footer-inner {
   max-width: 1100px;
@@ -1199,6 +1207,7 @@ a { color: inherit; transition: color 0.2s; }
 /* ── ADMIN BAR ── */
 .admin-bar .site-header { top: 32px; }
 @media screen and (max-width: 782px) { .admin-bar .site-header { top: 46px; } }
+#wpadminbar { max-width: 100% !important; overflow: hidden !important; }
 
 /* ── RESPONSIVE — TABLET (1024px) ── */
 @media (max-width: 1024px) {
@@ -1261,10 +1270,15 @@ a { color: inherit; transition: color 0.2s; }
 
 /* ── RESPONSIVE — MOBILE (768px) ── */
 @media (max-width: 768px) {
+  /* Global mobile overflow containment */
+  html, body { width: 100%; overflow-x: hidden; }
+  .site, .site-main, section { max-width: 100%; overflow-x: hidden; }
+  .section-wrap { max-width: 100%; overflow-x: hidden; }
+
   .site-header { padding: 0.75rem 1.25rem; }
 
   /* Hero mobile */
-  #hero { grid-template-columns: 1fr; min-height: auto; max-width: 100%; overflow-x: hidden; }
+  #hero { grid-template-columns: 1fr; min-height: auto; width: 100%; max-width: 100%; overflow: hidden; }
   .hero-left { padding: 7rem 1.25rem 2.5rem; min-width: 0; }
   .hero-title { font-size: clamp(2rem, 8vw, 3rem); margin-bottom: 1rem; }
   .hero-desc { font-size: 0.95rem; max-width: 100%; margin-bottom: 2rem; line-height: 1.65; }
@@ -1359,7 +1373,8 @@ a { color: inherit; transition: color 0.2s; }
   .pub-body h3 { font-size: 0.9rem; }
   .pub-body .authors, .pub-body .venue { font-size: 0.78rem; }
   .pub-type { justify-self: start; }
-  .pub-item:hover { margin: 0; padding-left: 0; padding-right: 0; border-radius: 0; }
+  .pub-list { overflow-x: hidden; }
+  .pub-item:hover { margin: 0; padding-left: 0; padding-right: 0; border-radius: 0; background: transparent; }
 
   /* Financements mobile */
   .financement-grid { grid-template-columns: 1fr; gap: 1rem; }
