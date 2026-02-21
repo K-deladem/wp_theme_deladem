@@ -42,7 +42,7 @@
           <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" class="site-avatar">
         <?php endif;
       endif; ?>
-      <?php bloginfo('name'); ?> <span>·</span> HCI
+      <?php bloginfo('name'); ?> <?php $tag = get_option('dlm_site_tag','HCI'); if($tag): ?><span>·</span> <?php echo esc_html($tag); ?><?php endif; ?>
     </a>
   </div>
 

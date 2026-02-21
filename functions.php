@@ -53,17 +53,76 @@ add_action( 'after_switch_theme', function() {
 
 
 /* ============================================================
-   2. ASSETS
+   2. TYPOGRAPHY PRESETS
+   ============================================================ */
+function deladem_get_typographies() {
+    return [
+        'editorial' => [
+            'label' => 'Editorial (DM Serif + DM Sans)',
+            'serif' => "'DM Serif Display', serif",
+            'sans'  => "'DM Sans', sans-serif",
+            'mono'  => "'JetBrains Mono', monospace",
+            'url'   => 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap',
+        ],
+        'modern' => [
+            'label' => 'Modern (Inter + Inter)',
+            'serif' => "'Inter', sans-serif",
+            'sans'  => "'Inter', sans-serif",
+            'mono'  => "'Fira Code', monospace",
+            'url'   => 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap',
+        ],
+        'classic' => [
+            'label' => 'Classic (Playfair + Source Sans)',
+            'serif' => "'Playfair Display', serif",
+            'sans'  => "'Source Sans 3', sans-serif",
+            'mono'  => "'Source Code Pro', monospace",
+            'url'   => 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap',
+        ],
+        'elegant' => [
+            'label' => 'Elegant (Cormorant + Nunito Sans)',
+            'serif' => "'Cormorant Garamond', serif",
+            'sans'  => "'Nunito Sans', sans-serif",
+            'mono'  => "'Inconsolata', monospace",
+            'url'   => 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito+Sans:wght@300;400;500;600&family=Inconsolata:wght@400;500&display=swap',
+        ],
+        'swiss' => [
+            'label' => 'Swiss (Libre Baskerville + IBM Plex)',
+            'serif' => "'Libre Baskerville', serif",
+            'sans'  => "'IBM Plex Sans', sans-serif",
+            'mono'  => "'IBM Plex Mono', monospace",
+            'url'   => 'https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap',
+        ],
+        'geometric' => [
+            'label' => 'Geometric (Outfit + Outfit)',
+            'serif' => "'Outfit', sans-serif",
+            'sans'  => "'Outfit', sans-serif",
+            'mono'  => "'Space Mono', monospace",
+            'url'   => 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap',
+        ],
+    ];
+}
+
+/* ============================================================
+   3. ASSETS
    ============================================================ */
 function deladem_enqueue_assets() {
-    wp_enqueue_style( 'deladem-fonts',
-        'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap',
-        [], null
-    );
+    $typo = deladem_get_typographies();
+    $active = get_option( 'dlm_typography', 'editorial' );
+    $fonts_url = isset( $typo[ $active ] ) ? $typo[ $active ]['url'] : $typo['editorial']['url'];
+
+    wp_enqueue_style( 'deladem-fonts', $fonts_url, [], null );
     wp_enqueue_style( 'deladem-main',
         get_template_directory_uri() . '/assets/css/main.css',
         [ 'deladem-fonts' ], filemtime( get_template_directory() . '/assets/css/main.css' )
     );
+    $layout_file = get_template_directory() . '/assets/css/skins-layout.css';
+    if ( file_exists( $layout_file ) ) {
+        wp_enqueue_style( 'deladem-layouts',
+            get_template_directory_uri() . '/assets/css/skins-layout.css',
+            [ 'deladem-main' ], filemtime( $layout_file )
+        );
+    }
+
     wp_enqueue_script( 'deladem-main',
         get_template_directory_uri() . '/assets/js/main.js',
         [], filemtime( get_template_directory() . '/assets/js/main.js' ), true
@@ -82,6 +141,81 @@ add_action( 'admin_enqueue_scripts', function( $hook ) {
         get_template_directory_uri() . '/assets/js/admin-media.js',
         [ 'jquery' ], DELADEM_VERSION, true
     );
+} );
+
+// Inject custom color + typography overrides into <head>
+add_action( 'wp_head', function() {
+    $defaults = [
+        'color_accent'  => '#C94A2D',
+        'color_accent2' => '#3B5BDB',
+        'color_bg'      => '#F5F2EE',
+        'color_ink'     => '#1A1714',
+        'color_card'    => '#FDFAF7',
+        'color_border'  => '#E2DDD8',
+        'color_muted'   => '#7A7067',
+    ];
+    $map = [
+        'color_accent'  => 'accent',
+        'color_accent2' => 'accent2',
+        'color_bg'      => 'bg',
+        'color_ink'     => 'ink',
+        'color_card'    => 'card',
+        'color_border'  => 'border',
+        'color_muted'   => 'muted',
+    ];
+
+    // Helper: hex to "r,g,b" string
+    $hex_to_rgb = function( $hex ) {
+        $hex = ltrim( $hex, '#' );
+        return hexdec( substr($hex,0,2) ) . ',' . hexdec( substr($hex,2,2) ) . ',' . hexdec( substr($hex,4,2) );
+    };
+
+    $css = '';
+
+    // Colors
+    foreach ( $defaults as $key => $default ) {
+        $val = get_option( 'dlm_' . $key, $default );
+        if ( $val && $val !== $default ) {
+            $prop = esc_attr( $map[ $key ] );
+            $css .= '  --' . $prop . ': ' . esc_attr( $val ) . ";\n";
+            if ( $key === 'color_accent' || $key === 'color_accent2' ) {
+                $css .= '  --' . $prop . '-rgb: ' . $hex_to_rgb( $val ) . ";\n";
+            }
+        }
+    }
+
+    // Typography
+    $active_typo = get_option( 'dlm_typography', 'editorial' );
+    if ( $active_typo !== 'editorial' ) {
+        $typos = deladem_get_typographies();
+        if ( isset( $typos[ $active_typo ] ) ) {
+            $t = $typos[ $active_typo ];
+            $css .= '  --serif: ' . $t['serif'] . ";\n";
+            $css .= '  --sans: ' . $t['sans'] . ";\n";
+            $css .= '  --mono: ' . $t['mono'] . ";\n";
+        }
+    }
+
+    if ( $css ) {
+        echo "<style id=\"deladem-custom-overrides\">\n:root,\nhtml[data-theme=\"dark\"] {\n" . $css . "}\n</style>\n";
+    }
+}, 50 );
+
+// Layout body classes
+add_filter( 'body_class', function( $classes ) {
+    $layouts = [
+        'layout_projects'     => 'grid',
+        'layout_publications' => 'list',
+        'layout_cv'           => 'two-col',
+        'layout_contact'      => 'two-col',
+    ];
+    foreach ( $layouts as $key => $default ) {
+        $val = get_option( 'dlm_' . $key, $default );
+        if ( $val !== $default ) {
+            $classes[] = $key . '-' . sanitize_html_class( $val );
+        }
+    }
+    return $classes;
 } );
 
 
@@ -703,6 +837,14 @@ add_action( 'admin_menu', function() {
 function deladem_options_page() {
     if ( isset($_POST['deladem_save']) && check_admin_referer('deladem_options_save') ) {
 
+        // Site tag
+        update_option( 'dlm_site_tag', sanitize_text_field( wp_unslash( $_POST['site_tag'] ?? 'HCI' ) ) );
+
+        // Typography
+        $typo_val = sanitize_text_field( wp_unslash( $_POST['typography'] ?? 'editorial' ) );
+        $valid_typos = array_keys( deladem_get_typographies() );
+        update_option( 'dlm_typography', in_array( $typo_val, $valid_typos, true ) ? $typo_val : 'editorial' );
+
         $text_fields = [
             'hero_etiquette', 'hero_titre_ligne1', 'hero_titre_em', 'hero_titre_ligne3',
             'hero_btn1_label', 'hero_btn1_url', 'hero_btn2_label', 'hero_btn2_url',
@@ -809,6 +951,28 @@ function deladem_options_page() {
 
         <form method="post">
             <?php wp_nonce_field('deladem_options_save'); ?>
+
+            <!-- ──── HEADER ──── -->
+            <div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;">
+                <h2 style="margin-bottom:1rem;border-bottom:2px solid #C94A2D;padding-bottom:.5rem;">Header</h2>
+                <table class="form-table">
+                    <tr><th>Site Tag</th>
+                        <td>
+                            <input type="text" name="site_tag" value="<?php echo esc_attr( get_option('dlm_site_tag','HCI') ); ?>" class="regular-text" placeholder="HCI">
+                            <p class="description">Displayed next to the site name: "Name · <strong>Tag</strong>". Leave empty to hide.</p>
+                        </td></tr>
+                    <tr><th>Typography</th>
+                        <td>
+                            <select name="typography">
+                                <?php $current_typo = get_option('dlm_typography','editorial');
+                                foreach ( deladem_get_typographies() as $slug => $t ) :
+                                    printf('<option value="%s"%s>%s</option>', esc_attr($slug), selected($current_typo, $slug, false), esc_html($t['label']));
+                                endforeach; ?>
+                            </select>
+                            <p class="description">Font combination for headings, body text and code.</p>
+                        </td></tr>
+                </table>
+            </div>
 
             <!-- ──── HERO ──── -->
             <div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;">
@@ -1161,6 +1325,117 @@ function deladem_customizer_register( $wp_customize ) {
         'title'    => 'Deladem IHM',
         'priority' => 30,
     ] );
+
+    // Section Header
+    $wp_customize->add_section( 'deladem_header', [
+        'title'    => 'Header',
+        'panel'    => 'deladem_panel',
+        'priority' => 5,
+    ] );
+    $wp_customize->add_setting( 'dlm_site_tag', [ 'type' => 'option', 'default' => 'HCI', 'sanitize_callback' => 'sanitize_text_field' ] );
+    $wp_customize->add_control( 'dlm_site_tag', [ 'label' => 'Site Tag (next to site name)', 'section' => 'deladem_header', 'type' => 'text', 'description' => 'Displayed as "Site Name · Tag". Leave empty to hide.' ] );
+
+    // Section Typography
+    $wp_customize->add_section( 'deladem_typography', [
+        'title'    => 'Typography',
+        'panel'    => 'deladem_panel',
+        'priority' => 6,
+    ] );
+    $wp_customize->add_setting( 'dlm_typography', [
+        'type'              => 'option',
+        'default'           => 'editorial',
+        'sanitize_callback' => function( $val ) {
+            $valid = array_keys( deladem_get_typographies() );
+            return in_array( $val, $valid, true ) ? $val : 'editorial';
+        },
+    ] );
+    $typo_choices = [];
+    foreach ( deladem_get_typographies() as $slug => $t ) {
+        $typo_choices[ $slug ] = $t['label'];
+    }
+    $wp_customize->add_control( 'dlm_typography', [
+        'label'       => 'Font Pairing',
+        'section'     => 'deladem_typography',
+        'type'        => 'select',
+        'choices'     => $typo_choices,
+        'description' => 'Choose a font combination for headings, body text and code.',
+    ] );
+
+    // Section Colors
+    $wp_customize->add_section( 'deladem_colors', [
+        'title'    => 'Colors',
+        'panel'    => 'deladem_panel',
+        'priority' => 6,
+    ] );
+
+    $color_controls = [
+        'color_accent'  => [ 'Accent color',     '#C94A2D', 'Main accent: links, icons, buttons' ],
+        'color_accent2' => [ 'Secondary accent',  '#3B5BDB', 'Badges, gradients, highlights' ],
+        'color_bg'      => [ 'Background',        '#F5F2EE', 'Page background' ],
+        'color_ink'     => [ 'Text',              '#1A1714', 'Main text color' ],
+        'color_card'    => [ 'Card background',   '#FDFAF7', 'Cards and panels' ],
+        'color_border'  => [ 'Borders',           '#E2DDD8', 'Borders and dividers' ],
+        'color_muted'   => [ 'Muted text',        '#7A7067', 'Secondary text' ],
+    ];
+    foreach ( $color_controls as $key => $cfg ) {
+        $wp_customize->add_setting( 'dlm_' . $key, [
+            'type'              => 'option',
+            'default'           => $cfg[1],
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport'         => 'refresh',
+        ] );
+        $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'dlm_' . $key, [
+            'label'       => $cfg[0],
+            'section'     => 'deladem_colors',
+            'description' => $cfg[2],
+        ] ) );
+    }
+
+    // Section Layouts (per section)
+    $wp_customize->add_section( 'deladem_layouts', [
+        'title'       => 'Section Layouts',
+        'panel'       => 'deladem_panel',
+        'priority'    => 7,
+        'description' => 'Choose the layout for each section independently.',
+    ] );
+
+    $layout_options = [
+        'layout_projects' => [
+            'label'   => 'Projects',
+            'default' => 'grid',
+            'choices' => [ 'grid' => 'Grid (auto-fill)', 'two-col' => 'Two columns', 'list' => 'List (single column)' ],
+        ],
+        'layout_publications' => [
+            'label'   => 'Publications',
+            'default' => 'list',
+            'choices' => [ 'list' => 'List (default)', 'card-grid' => 'Card grid', 'compact' => 'Compact (no type badge)' ],
+        ],
+        'layout_cv' => [
+            'label'   => 'CV / Background',
+            'default' => 'two-col',
+            'choices' => [ 'two-col' => 'Two columns (default)', 'single' => 'Single column (timeline)' ],
+        ],
+        'layout_contact' => [
+            'label'   => 'Contact',
+            'default' => 'two-col',
+            'choices' => [ 'two-col' => 'Two columns (default)', 'stacked' => 'Stacked (single column)' ],
+        ],
+    ];
+    foreach ( $layout_options as $key => $cfg ) {
+        $wp_customize->add_setting( 'dlm_' . $key, [
+            'type'              => 'option',
+            'default'           => $cfg['default'],
+            'sanitize_callback' => function( $val ) use ( $cfg ) {
+                return array_key_exists( $val, $cfg['choices'] ) ? $val : $cfg['default'];
+            },
+        ] );
+        $wp_customize->add_control( 'dlm_' . $key, [
+            'label'   => $cfg['label'],
+            'section' => 'deladem_layouts',
+            'type'    => 'select',
+            'choices' => $cfg['choices'],
+        ] );
+    }
 
     // Section Hero
     $wp_customize->add_section( 'deladem_hero', [

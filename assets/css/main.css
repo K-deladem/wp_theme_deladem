@@ -11,6 +11,8 @@
   --accent: #C94A2D;
   --accent-dark: #a83520;
   --accent2: #3B5BDB;
+  --accent-rgb: 201,74,45;
+  --accent2-rgb: 59,91,219;
   --card: #FDFAF7;
   --border: #E2DDD8;
   --mono: 'JetBrains Mono', monospace;
@@ -182,8 +184,8 @@ a { color: inherit; transition: color 0.2s; }
 .hero-bg-pattern {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 60% 60% at 70% 30%, rgba(201,74,45,0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 50% at 20% 70%, rgba(59,91,219,0.18) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 60% at 70% 30%, rgba(var(--accent-rgb),0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 20% 70%, rgba(var(--accent2-rgb),0.18) 0%, transparent 60%);
 }
 .hero-grid {
   position: absolute; inset: 0;
@@ -210,8 +212,8 @@ a { color: inherit; transition: color 0.2s; }
   will-change: transform;
 }
 .sensor-badge:hover {
-  background: rgba(201,74,45,0.2);
-  border-color: rgba(201,74,45,0.5);
+  background: rgba(var(--accent-rgb),0.2);
+  border-color: rgba(var(--accent-rgb),0.5);
   color: var(--white);
   animation-play-state: paused;
   transform: scale(1.12);
@@ -289,7 +291,7 @@ a { color: inherit; transition: color 0.2s; }
   opacity: 0; transition: opacity 0.3s ease;
 }
 .interet-item.active::before { opacity: 1; }
-.interet-item.active { border-color: rgba(201,74,45,0.2); }
+.interet-item.active { border-color: rgba(var(--accent-rgb),0.2); }
 
 /* Header (toggle) */
 .interet-header {
@@ -301,7 +303,7 @@ a { color: inherit; transition: color 0.2s; }
   transition: background 0.2s ease;
 }
 .interet-header:hover { background: rgba(0,0,0,0.02); }
-.interet-item.active .interet-header { background: rgba(201,74,45,0.02); }
+.interet-item.active .interet-header { background: rgba(var(--accent-rgb),0.02); }
 
 .interet-num {
   font-family: var(--mono); font-size: 0.62rem;
@@ -798,7 +800,7 @@ a { color: inherit; transition: color 0.2s; }
   background: var(--card); border: 1px solid var(--border); color: var(--ink);
   transition: border-color 0.2s, background 0.2s;
 }
-.skill-chip:hover { border-color: var(--accent); background: rgba(201,74,45,0.04); }
+.skill-chip:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),0.04); }
 
 /* ── CONTACT ── */
 .contact-section { background: var(--ink); padding: 6rem 3rem; }
@@ -935,7 +937,7 @@ a { color: inherit; transition: color 0.2s; }
 .footer-links a:hover {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(201,74,45,0.08);
+  background: rgba(var(--accent-rgb),0.08);
 }
 .footer-links a svg { display: block; }
 .footer-mention {
@@ -1543,7 +1545,10 @@ html[data-theme="dark"] {
   --ink: #E8E4E0;
   --muted: #8A847D;
   --accent: #E05A3A;
-  --accent-dark: #c94a2d;
+  --accent-dark: #b8442a;
+  --accent2: #5B7BF7;
+  --accent-rgb: 224,90,58;
+  --accent2-rgb: 91,123,247;
   --card: #1E1B18;
   --border: #2E2A26;
   --white: #fff;
@@ -1559,8 +1564,8 @@ html[data-theme="dark"] .site-header {
 html[data-theme="dark"] .hero-right { background: #0D0B09; }
 html[data-theme="dark"] .hero-bg-pattern {
   background:
-    radial-gradient(ellipse 60% 60% at 70% 30%, rgba(224,90,58,0.2) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 50% at 20% 70%, rgba(59,91,219,0.15) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 60% at 70% 30%, rgba(var(--accent-rgb),0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 20% 70%, rgba(var(--accent2-rgb),0.15) 0%, transparent 60%);
 }
 html[data-theme="dark"] .hero-grid {
   background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
@@ -1573,7 +1578,7 @@ html[data-theme="dark"] .info-row { border-bottom-color: var(--border); }
 
 html[data-theme="dark"] .interet-item { background: var(--card); border-color: var(--border); }
 html[data-theme="dark"] .interet-header:hover { background: rgba(255,255,255,0.03); }
-html[data-theme="dark"] .interet-item.active .interet-header { background: rgba(224,90,58,0.05); }
+html[data-theme="dark"] .interet-item.active .interet-header { background: rgba(var(--accent-rgb),0.05); }
 html[data-theme="dark"] .interet-toggle { background: var(--bg); border-color: var(--border); }
 html[data-theme="dark"] .interet-desc { border-top-color: var(--border); }
 
@@ -1610,7 +1615,7 @@ html[data-theme="dark"] .archive-pagination .current { background: var(--ink); c
 html[data-theme="dark"] .cv-line { background: var(--border); }
 
 html[data-theme="dark"] .skill-chip { background: var(--card); border-color: var(--border); }
-html[data-theme="dark"] .skill-chip:hover { background: rgba(224,90,58,0.08); }
+html[data-theme="dark"] .skill-chip:hover { background: rgba(var(--accent-rgb),0.08); }
 
 html[data-theme="dark"] .tag { background: var(--card); border-color: var(--border); }
 
