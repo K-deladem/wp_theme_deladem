@@ -1649,6 +1649,10 @@ html[data-theme="dark"] .financement-card:hover { border-color: var(--accent); b
 html[data-theme="dark"] .financement-statut--en_attente { background: rgba(245,158,11,0.15); color: #fbbf24; }
 html[data-theme="dark"] .financement-statut--refuse { background: rgba(239,68,68,0.15); color: #f87171; }
 html[data-theme="dark"] .financement-statut--suspendu { background: rgba(107,114,128,0.15); color: #9ca3af; }
+html[data-theme="dark"] .financement-statut--actif { background: rgba(16,185,129,0.15); color: #34d399; }
+html[data-theme="dark"] .financement-type--bourse { border-color: #34d399; color: #34d399; }
+html[data-theme="dark"] .financement-type--contrat { border-color: #a78bfa; color: #a78bfa; }
+html[data-theme="dark"] .financement-type--prix { border-color: #fbbf24; color: #fbbf24; }
 html[data-theme="dark"] .financement-partner { border-bottom-color: var(--border); }
 html[data-theme="dark"] .financement-partner-logo { opacity: 0.85; }
 html[data-theme="dark"] .projet-financement-item { background: var(--card); border-color: var(--border); }
@@ -1660,7 +1664,7 @@ html[data-theme="dark"] .archive-empty { border-color: var(--border); }
 html[data-theme="dark"] .archive-pagination a,
 html[data-theme="dark"] .archive-pagination span { border-color: var(--border); color: var(--muted); }
 html[data-theme="dark"] .archive-pagination a:hover { border-color: var(--accent); color: var(--accent); }
-html[data-theme="dark"] .archive-pagination .current { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+html[data-theme="dark"] .archive-pagination .current { background: var(--accent); color: var(--white); border-color: var(--accent); }
 
 html[data-theme="dark"] .cv-line { background: var(--border); }
 
@@ -1683,6 +1687,23 @@ html[data-theme="dark"] .main-navigation--mobile.toggled { background: var(--bg)
 html[data-theme="dark"] .mobile-nav-header { border-bottom-color: var(--border); }
 html[data-theme="dark"] .mobile-nav-footer { border-top-color: var(--border); }
 html[data-theme="dark"] .mobile-nav-close { border-color: var(--border); color: var(--ink); }
+
+/* Boutons dark mode */
+html[data-theme="dark"] .btn-primary {
+  background: var(--accent);
+  color: var(--white);
+}
+html[data-theme="dark"] .btn-primary:hover {
+  background: var(--accent-dark);
+  color: var(--white);
+}
+
+/* Badges mobile dark */
+@media (max-width: 768px) {
+  html[data-theme="dark"] .sensor-badges {
+    background: rgba(13,11,9,0.95);
+  }
+}
 
 /* ─── Accessibility: Skip link & Screen reader text ─── */
 .screen-reader-text {

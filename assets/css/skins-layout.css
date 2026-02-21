@@ -1066,9 +1066,11 @@ html[data-theme="dark"] .layout_hero-editorial .sensor-badges {
    ══════════════════════════════════════════════════════════════ */
 
 html[data-theme="dark"] .layout_hero-bold .btn-primary {
+  background: var(--white);
   color: var(--bg);
 }
 html[data-theme="dark"] .layout_hero-bold .btn-primary:hover {
+  background: var(--accent);
   color: var(--white);
 }
 html[data-theme="dark"] .layout_hero-bold .hero-right {

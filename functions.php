@@ -170,34 +170,46 @@ add_action( 'wp_head', function() {
         return hexdec( substr($hex,0,2) ) . ',' . hexdec( substr($hex,2,2) ) . ',' . hexdec( substr($hex,4,2) );
     };
 
-    $css = '';
+    $css_light = '';  // Layout colors: only :root (bg, ink, card, border, muted)
+    $css_both  = '';  // Accent + typography: :root AND dark mode
 
-    // Colors
+    // Colors — separate layout vs accent
     foreach ( $defaults as $key => $default ) {
         $val = get_option( 'dlm_' . $key, $default );
         if ( $val && $val !== $default ) {
             $prop = esc_attr( $map[ $key ] );
-            $css .= '  --' . $prop . ': ' . esc_attr( $val ) . ";\n";
+            $line = '  --' . $prop . ': ' . esc_attr( $val ) . ";\n";
+            $rgb_line = '';
             if ( $key === 'color_accent' || $key === 'color_accent2' ) {
-                $css .= '  --' . $prop . '-rgb: ' . $hex_to_rgb( $val ) . ";\n";
+                $rgb_line = '  --' . $prop . '-rgb: ' . $hex_to_rgb( $val ) . ";\n";
+                $css_both .= $line . $rgb_line;
+            } else {
+                $css_light .= $line;
             }
         }
     }
 
-    // Typography
+    // Typography — applies to both modes
     $active_typo = get_option( 'dlm_typography', 'editorial' );
     if ( $active_typo !== 'editorial' ) {
         $typos = deladem_get_typographies();
         if ( isset( $typos[ $active_typo ] ) ) {
             $t = $typos[ $active_typo ];
-            $css .= '  --serif: ' . $t['serif'] . ";\n";
-            $css .= '  --sans: ' . $t['sans'] . ";\n";
-            $css .= '  --mono: ' . $t['mono'] . ";\n";
+            $css_both .= '  --serif: ' . $t['serif'] . ";\n";
+            $css_both .= '  --sans: ' . $t['sans'] . ";\n";
+            $css_both .= '  --mono: ' . $t['mono'] . ";\n";
         }
     }
 
-    if ( $css ) {
-        echo "<style id=\"deladem-custom-overrides\">\n:root,\nhtml[data-theme=\"dark\"] {\n" . $css . "}\n</style>\n";
+    if ( $css_light || $css_both ) {
+        echo "<style id=\"deladem-custom-overrides\">\n";
+        if ( $css_light || $css_both ) {
+            echo ":root {\n" . $css_light . $css_both . "}\n";
+        }
+        if ( $css_both ) {
+            echo "html[data-theme=\"dark\"] {\n" . $css_both . "}\n";
+        }
+        echo "</style>\n";
     }
 }, 50 );
 
